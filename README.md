@@ -44,3 +44,9 @@ Desarrollar un sistema en Python, basado en programación orientada a objetos, q
 - Generar resultados claros por consola o mediante archivos de salida.
 
 ---
+## 3. Dataset utilizado
+
+El proyecto utiliza el dataset público:
+
+**Graphs SNAP Wiki — Kaggle**  
+<https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki>

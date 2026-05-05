@@ -1,0 +1,52 @@
+class GrafoArticuloCategoria:
+    def __init__(self):
+        
+        #dicionario que almacena el objeto articulo
+        self.articulos = {}
+        
+        #diccionario que almacena el objeto categoria
+        self.categorias = {}
+        
+        #dicionario que almacena listas con el id origen del objeto articulo y el id 
+        #destino del objeto articulo.
+        self.adyacencia = {}
+        
+        #agregamos en el diccionario de objetos articulo usando como indice
+        #el id del articulo (es unico) y como valor el objeto articulo
+        
+    def agregar_articulo(self, articulo):
+        self.articulos[articulo.id_articulo] = articulo
+        self.adyacencia[articulo.id_articulo] = []
+        
+        #agregamos en el diccionario de objetos categoria usando como indice
+        #el id de la categoria (es unico) y como valor el objeto categoria
+        
+    def agregar_categoria(self, categoria):
+        self.categorias[categoria.id_categoria] = categoria
+        
+        #agregamos en el diccionario de adyacencia una lista vacia para el punto de origen
+        #y el punto de destino (enlaces).
+
+    def agregar_enlace(self, id_origen, id_destino):
+        if id_origen not in self.adyacencia:
+            self.adyacencia[id_origen] = []
+
+        self.adyacencia[id_origen].append(id_destino)
+
+        if id_origen in self.articulos:
+            self.articulos[id_origen].agregar_enlace_destino(id_destino)
+
+        if id_destino in self.articulos:
+            self.articulos[id_destino].agregar_enlace_origen(id_origen)
+
+    def asociar_articulo_categoria(self, id_articulo, id_categoria):
+        if id_articulo in self.articulos:
+            self.articulos[id_articulo].agregar_categoria(id_categoria)
+
+        if id_categoria in self.categorias:
+            self.categorias[id_categoria].agregar_articulo(id_articulo)
+            
+    #cuántos artículos apuntan hacia ese artículo
+    
+    def grado_entrada(self, id_articulo):
+    return len(self.articulos[id_articulo].enlace_origen)
