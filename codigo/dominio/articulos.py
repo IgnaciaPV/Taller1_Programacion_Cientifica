@@ -24,10 +24,25 @@ class Articulo:
             
     def agregar_enlace_destino(self, id_articulo_destino):
         
-        if id_articulo_destino not in self.enlace_origen:
-            self.enlace_origen.append(id_articulo_destino)
-            
+        if id_articulo_destino not in self.enlace_destino:
+            self.enlace_destino.append(id_articulo_destino)
+
     def agregar_enlace_origen(self, id_articulo_origen):
-        
-        if id_articulo_origen not in self.enlace_destino:
-            self.enlace_destino.append(id_articulo_origen)
+        if id_articulo_origen not in self.enlace_origen:
+            self.enlace_origen.append(id_articulo_origen)
+
+    def leer_enlaces_limitado(ruta, limite=10000):
+        enlaces = []
+
+        with open(ruta, "r", encoding="utf-8") as archivo:
+            for i, linea in enumerate(archivo):
+                if i >= limite:
+                    break
+
+                if linea.startswith("#"):
+                    continue
+
+                origen, destino = map(int, linea.strip().split())
+                enlaces.append((origen, destino))
+
+        return enlaces
