@@ -49,4 +49,4 @@ class GrafoArticuloCategoria:
     #cuántos artículos apuntan hacia ese artículo
     
     def grado_entrada(self, id_articulo):
-    return len(self.articulos[id_articulo].enlace_origen)
+        return len(self.articulos[id_articulo].enlace_origen)

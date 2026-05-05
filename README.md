@@ -50,3 +50,15 @@ El proyecto utiliza el dataset público:
 
 **Graphs SNAP Wiki — Kaggle**  
 <https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki>
+
+El dataset contiene información asociada a una red de Wikipedia, incluyendo:
+
+- Enlaces entre artículos.
+- Identificadores de artículos.
+- Nombres de artículos.
+- Categorías asociadas a los artículos.
+- Relaciones entre artículos y categorías.
+
+Debido al tamaño del dataset original, el proyecto permite trabajar con un **subconjunto filtrado** de datos, definido mediante criterios razonables para facilitar el análisis y asegurar una ejecución eficiente.
+
+---
