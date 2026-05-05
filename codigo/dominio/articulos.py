@@ -31,18 +31,29 @@ class Articulo:
         if id_articulo_origen not in self.enlace_origen:
             self.enlace_origen.append(id_articulo_origen)
 
-    def leer_enlaces_limitado(ruta, limite=10000):
-        enlaces = []
 
-        with open(ruta, "r", encoding="utf-8") as archivo:
-            for i, linea in enumerate(archivo):
-                if i >= limite:
-                    break
+    def leer_mtx_filtrado(ruta, limite=10000):
+            enlaces = []
 
-                if linea.startswith("#"):
-                    continue
+            with open(ruta, "r", encoding="utf-8") as archivo:
+                for linea in archivo:
 
-                origen, destino = map(int, linea.strip().split())
-                enlaces.append((origen, destino))
+                    # Saltar comentarios
+                    if linea.startswith("%"):
+                        continue
 
-        return enlaces
+                    # Saltar línea de dimensiones (solo 3 números)
+                    partes = linea.strip().split()
+                    if len(partes) == 3:
+                        continue
+
+                    # Leer enlaces
+                    if len(partes) == 2:
+                        origen, destino = map(int, partes)
+
+                        enlaces.append((origen, destino))
+
+                        if len(enlaces) >= limite:
+                            break
+
+            return enlaces
