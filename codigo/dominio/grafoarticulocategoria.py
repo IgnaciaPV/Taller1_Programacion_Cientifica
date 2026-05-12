@@ -50,3 +50,6 @@ class GrafoArticuloCategoria:
     
     def grado_entrada(self, id_articulo):
         return len(self.articulos[id_articulo].enlace_origen)
+
+    def grado_salida(self, id_articulo):
+        return len(self.articulos[id_articulo].enlace_destino)
