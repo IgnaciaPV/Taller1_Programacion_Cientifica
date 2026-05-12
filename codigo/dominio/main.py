@@ -31,9 +31,21 @@ def main():
             grafo.agregar_categoria(Categoria(id_categoria, categoria_por_id.get(id_categoria, f"Categoria {id_categoria}")))
         grafo.asociar_articulo_categoria(id_articulo, id_categoria)
 
-    print("Artículos cargados:", len(grafo.articulos))
-    print("Categorías cargadas:", len(grafo.categorias))
-    print("Enlaces cargados:", sum(len(v) for v in grafo.adyacencia.values()))
+    inicio = list(grafo.articulos.keys())[0]
+    resultado_bfs = grafo.bfs(inicio)
+    print("BFS:", resultado_bfs[:10])
+
+    resultado_dfs = grafo.dfs(inicio)
+    print("DFS:", resultado_dfs[:10])
+
+    top_articulos = grafo.articulos_mayor_grado_entrada()
+
+    print("\nArticulos con mayor grado de entrada:")
+
+    for articulo, grado in top_articulos:
+        nombre = grafo.articulos[articulo].nombre_articulo
+        print(nombre, "-", grado)
+
 
 if __name__ == "__main__":
     main()

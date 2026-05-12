@@ -53,3 +53,43 @@ class GrafoArticuloCategoria:
 
     def grado_salida(self, id_articulo):
         return len(self.articulos[id_articulo].enlace_destino)
+
+    def articulos_mayor_grado_entrada(self, top=10):
+        grados = []
+
+        for id_articulo in self.articulos:
+            grado = self.grado_entrada(id_articulo)
+            grados.append((id_articulo, grado))
+        grados.sort(key=lambda x: x[1], reverse=True)
+        return grados[:top]
+
+    def bfs(self, inicio):
+        visitados = set()
+        cola = [inicio]
+        recorrido = []
+
+        while cola:
+            actual = cola.pop(0)
+            if actual not in visitados:
+                visitados.add(actual)
+                recorrido.append(actual)
+                for vecino in self.adyacencia.get(actual, []):
+                    if vecino not in visitados:
+                        cola.append(vecino)
+        return recorrido
+
+    def dfs(self, inicio):
+        visitados = set()
+        pila = [inicio]
+        recorrido = []
+
+        while pila:
+            actual = pila.pop()
+            if actual not in visitados:
+                visitados.add(actual)
+                recorrido.append(actual)
+                for vecino in self.adyacencia.get(actual, []):
+                    if vecino not in visitados:
+                        pila.append(vecino)
+
+        return recorrido
