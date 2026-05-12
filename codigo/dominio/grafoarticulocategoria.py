@@ -93,3 +93,52 @@ class GrafoArticuloCategoria:
                         pila.append(vecino)
 
         return recorrido
+
+    def existe_camino(self, origen, destino):
+        visitados = set()
+        cola = [origen]
+
+        while cola:
+            actual = cola.pop(0)
+
+            if actual == destino:
+                return True
+
+            if actual not in visitados:
+                visitados.add(actual)
+
+                for vecino in self.adyacencia.get(actual, []):
+                    if vecino not in visitados:
+                        cola.append(vecino)
+
+        return False
+
+    def pagerank(self, iteraciones=20, factor_amortiguacion=0.85):
+        cantidad_nodos = len(self.articulos)
+        rank = {}
+
+        for id_articulo in self.articulos:
+            rank[id_articulo] = 1 / cantidad_nodos
+
+
+        for i in range(iteraciones):
+            nuevo_rank = {}
+
+            for id_articulo in self.articulos:
+                suma = 0
+
+                # Revisamos qué nodos apuntan al artículo actual
+                for otro_articulo in self.articulos:
+
+                    enlaces = self.articulos[otro_articulo].enlace_destino
+
+                    if id_articulo in enlaces and len(enlaces) > 0:
+                        suma += rank[otro_articulo] / len(enlaces)
+
+                nuevo_rank[id_articulo] = (
+                        (1 - factor_amortiguacion) / cantidad_nodos
+                        + factor_amortiguacion * suma
+                )
+            rank = nuevo_rank
+
+        return rank

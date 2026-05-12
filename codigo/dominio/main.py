@@ -39,12 +39,39 @@ def main():
     print("DFS:", resultado_dfs[:10])
 
     top_articulos = grafo.articulos_mayor_grado_entrada()
+    # Obtener lista de ids de artículos
+    lista_articulos = list(grafo.articulos.keys())
+
+    # Seleccionamos dos artículos para probar conectividad
+    articulo_origen = lista_articulos[0]
+    articulo_destino = lista_articulos[1]
+
+    print( "\nExiste camino entre",  articulo_origen,"y",articulo_destino,":",grafo.existe_camino(articulo_origen, articulo_destino))
 
     print("\nArticulos con mayor grado de entrada:")
 
     for articulo, grado in top_articulos:
         nombre = grafo.articulos[articulo].nombre_articulo
         print(nombre, "-", grado)
+
+    ranks = grafo.pagerank()
+
+    top_pagerank = sorted(ranks.items(),key=lambda x: x[1],reverse=True)[:10]
+
+    print("\nTop PageRank:")
+
+    for id_articulo, valor in top_pagerank:
+        nombre = grafo.articulos[id_articulo].nombre_articulo
+        print(nombre, "-", round(valor, 6))
+#creacion de txt con resultados
+    with open("ranking_pagerank.txt", "w", encoding="utf-8") as archivo:
+
+        archivo.write("Top PageRank\n\n")
+
+        for id_articulo, valor in top_pagerank:
+            nombre = grafo.articulos[id_articulo].nombre_articulo
+
+            archivo.write(f"{nombre} - {round(valor, 6)}\n")
 
 
 if __name__ == "__main__":
