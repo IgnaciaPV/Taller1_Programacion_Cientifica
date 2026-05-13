@@ -46,7 +46,9 @@ def main():
     articulo_origen = lista_articulos[0]
     articulo_destino = lista_articulos[1]
 
-    print( "\nExiste camino entre",  articulo_origen,"y",articulo_destino,":",grafo.existe_camino(articulo_origen, articulo_destino))
+    camino = grafo.existe_camino(articulo_origen, articulo_destino)
+
+    print("\nCamino encontrado:", camino)
 
     print("\nArticulos con mayor grado de entrada:")
 
