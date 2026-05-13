@@ -79,29 +79,32 @@ El proyecto se organiza separando datos, documentación, clases del dominio, lec
 ```text
 .
 ├── datos/
-│   ├── rfa/
-│   ├── talk/
-│   ├── topcats/
-│   └── vote/
+│   ├── wiki-topcats.mtx
+│   ├── wiki-topcats_Categories.mtx
+│   ├── wiki-topcats_Category_names.txt
+│   └── wiki-topcats_pagenames.txt
 │
 ├── documentacion/
-│   ├── Taller.pdf
+│   ├── Diagrama_Clase_Taller1.pdf
+│   ├── Taller_1_PC_S1_2026.pdf
 │   ├── README.md
-│   ├── .gitignore
-│   ├── diagrama_clases.png
-│   └── informe.pdf
+│   └── .gitignore
 │
-└── codigo/
-    ├── dominio/
-    │   ├── articulos.py
-    │   ├── categoria.py
-    │   ├── grafoarticulocategoria.py
-    │   ├── lector_datosmtx.py
-    │   ├── main.py
-    │   └── lector_datos.py
-    └──resultados
-        ├── ranking_pagerank.txt
-        └── graficos
+├── codigo/
+│   └── dominio/
+│       ├── articulos.py
+│       ├── categoria.py
+│       ├── grafoarticulocategoria.py
+│       ├── lector_datos.py
+│       ├── lector_datosmtx.py
+│       └── main.py
+│
+├── resultados/
+│   ├── ranking_pagerank.txt
+│   ├── grafico_grado_entrada.png
+│   ├── grafico_pagerank.png
+│   └── histograma_grados.png
+│
 
 ```
 
@@ -111,14 +114,11 @@ El proyecto se organiza separando datos, documentación, clases del dominio, lec
 
 | Ruta | Descripción |
 |---|---|
-| `datos/rfa/` | Contiene archivos asociados a la red RFA del dataset. |
-| `datos/talk/` | Contiene archivos asociados a conversaciones o discusiones de Wikipedia. |
-| `datos/topcats/` | Contiene los archivos principales usados para artículos, categorías y enlaces. |
-| `datos/vote/` | Contiene archivos asociados a redes de votación. |
+| `datos/` | Contiene los archivos principales usados para artículos, categorías y enlaces. |
 | `documentacion/` | Contiene el enunciado del taller, el informe y el diagrama de clases. |
-| `codigo/dominio/` | Contiene las clases principales del modelo orientado a objetos y Contiene los módulos responsables de leer archivos `.txt` y `.mtx`. |
-| `src/main.py` | Archivo principal de ejecución del sistema. |
-| `ranking_pagerank.txt` | Archivo generado con los artículos mejor posicionados según PageRank. |
+| `codigo/dominio/` | Contiene las clases y lógica principal del sistema. |
+| `codigo/dominio/main.py` | Archivo principal de ejecución del sistema. |
+| `resultados/` | Contiene rankings y gráficos generados automáticamente. |
 
 ---
 
@@ -220,7 +220,7 @@ Métodos principales:
 | `articulos_mayor_grado_entrada(top)` | Retorna los artículos con mayor grado de entrada. |
 | `bfs(inicio)` | Realiza recorrido en anchura desde un artículo inicial. |
 | `dfs(inicio)` | Realiza recorrido en profundidad desde un artículo inicial. |
-| `existe_camino(origen, destino)` | Verifica si existe un camino entre dos artículos. |
+| `existe_camino(origen, destino)` | Busca y retorna un camino simple entre dos artículos si existe. |
 | `pagerank(iteraciones, factor_amortiguacion)` | Calcula el ranking de importancia de los artículos. |
 
 ---
