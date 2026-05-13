@@ -86,27 +86,28 @@ El proyecto se organiza separando datos, documentación, clases del dominio, lec
 │
 ├── documentacion/
 │   ├── Taller.pdf
+│   ├── README.md
+│   ├── .gitignore
 │   ├── diagrama_clases.png
 │   └── informe.pdf
 │
-├── codigo/
-│   └── dominio/
-│       ├── articulos.py
-│       ├── categoria.py
-│       ├── grafoarticulocategoria.py
-│       ├── lector_datosmtx.py
-│       ├── main.py
-│       └── lector_datos.py
-│
-├── ranking_pagerank.txt
-├── requirements.txt
-├── README.md
-└── .gitignore
+└── codigo/
+    ├── dominio/
+    │   ├── articulos.py
+    │   ├── categoria.py
+    │   ├── grafoarticulocategoria.py
+    │   ├── lector_datosmtx.py
+    │   ├── main.py
+    │   └── lector_datos.py
+    └──resultados
+        ├── ranking_pagerank.txt
+        └── graficos
+
 ```
 
 ---
 
-## 6. Descripción de carpetas
+## Descripción de carpetas
 
 | Ruta | Descripción |
 |---|---|
@@ -118,5 +119,151 @@ El proyecto se organiza separando datos, documentación, clases del dominio, lec
 | `codigo/dominio/` | Contiene las clases principales del modelo orientado a objetos y Contiene los módulos responsables de leer archivos `.txt` y `.mtx`. |
 | `src/main.py` | Archivo principal de ejecución del sistema. |
 | `ranking_pagerank.txt` | Archivo generado con los artículos mejor posicionados según PageRank. |
+
+---
+
+
+## Funcionalidades principales
+
+| Funcionalidad | Estado |
+|---|---|
+| Modelado de artículos mediante clase `Articulo` | Implementado |
+| Modelado de categorías mediante clase `Categoria` | Implementado |
+| Construcción del grafo dirigido | Implementado |
+| Representación mediante lista de adyacencia | Implementado |
+| Lectura de archivos `.mtx` | Implementado |
+| Lectura de nombres de artículos | Implementado |
+| Lectura de nombres de categorías | Implementado |
+| Asociación artículo-categoría | Implementado |
+| Cálculo de grado de entrada | Implementado |
+| Cálculo de grado de salida | Implementado |
+| Recorrido BFS | Implementado |
+| Recorrido DFS | Implementado |
+| Verificación de camino entre artículos | Implementado |
+| PageRank simplificado | Implementado |
+| Exportación de ranking a `.txt` | Implementado |
+
+---
+## Modelo orientado a objetos
+
+El sistema se organiza en tres clases principales: `Articulo`, `Categoria` y `GrafoArticuloCategoria`.
+
+---
+
+### Clase `Articulo`
+
+Representa un artículo de Wikipedia.
+
+Atributos principales:
+
+| Atributo | Descripción |
+|---|---|
+| `id_articulo` | Identificador único del artículo. |
+| `nombre_articulo` | Nombre del artículo. |
+| `categorias` | Lista de categorías asociadas al artículo. |
+| `enlace_origen` | Lista de artículos que apuntan hacia este artículo. |
+| `enlace_destino` | Lista de artículos hacia los cuales apunta este artículo. |
+
+Métodos principales:
+
+| Método | Descripción |
+|---|---|
+| `agregar_categoria(id_categoria)` | Asocia una categoría al artículo evitando duplicados. |
+| `agregar_enlace_destino(id_articulo_destino)` | Registra un enlace saliente desde el artículo actual. |
+| `agregar_enlace_origen(id_articulo_origen)` | Registra un enlace entrante hacia el artículo actual. |
+
+---
+
+### Clase `Categoria`
+
+Representa una categoría de Wikipedia.
+
+Atributos principales:
+
+| Atributo | Descripción |
+|---|---|
+| `id_categoria` | Identificador único de la categoría. |
+| `nombre_categoria` | Nombre descriptivo de la categoría. |
+| `articulos` | Lista de artículos asociados a la categoría. |
+
+Método principal:
+
+| Método | Descripción |
+|---|---|
+| `agregar_articulo(id_articulo)` | Asocia un artículo a la categoría evitando duplicados. |
+
+
+---
+
+### Clase `GrafoArticuloCategoria`
+
+Representa el grafo dirigido de artículos y categorías.
+
+Atributos principales:
+
+| Atributo | Descripción |
+|---|---|
+| `articulos` | Diccionario que almacena los artículos usando su ID como clave. |
+| `categorias` | Diccionario que almacena las categorías usando su ID como clave. |
+| `adyacencia` | Diccionario que representa la lista de adyacencia del grafo. |
+
+Métodos principales:
+
+| Método | Descripción |
+|---|---|
+| `agregar_articulo(articulo)` | Agrega un artículo al grafo. |
+| `agregar_categoria(categoria)` | Agrega una categoría al grafo. |
+| `agregar_enlace(id_origen, id_destino)` | Agrega una arista dirigida entre dos artículos. |
+| `asociar_articulo_categoria(id_articulo, id_categoria)` | Relaciona un artículo con una categoría. |
+| `grado_entrada(id_articulo)` | Calcula cuántos artículos apuntan hacia un artículo. |
+| `grado_salida(id_articulo)` | Calcula cuántos enlaces salen desde un artículo. |
+| `articulos_mayor_grado_entrada(top)` | Retorna los artículos con mayor grado de entrada. |
+| `bfs(inicio)` | Realiza recorrido en anchura desde un artículo inicial. |
+| `dfs(inicio)` | Realiza recorrido en profundidad desde un artículo inicial. |
+| `existe_camino(origen, destino)` | Verifica si existe un camino entre dos artículos. |
+| `pagerank(iteraciones, factor_amortiguacion)` | Calcula el ranking de importancia de los artículos. |
+
+---
+
+## Representación del grafo
+
+El grafo se representa mediante una **lista de adyacencia** implementada con diccionarios de Python.
+
+Ejemplo conceptual:
+
+```python
+adyacencia = {
+    1: [2, 5, 8],
+    2: [3],
+    3: [],
+    5: [1, 4]
+}
+```
+
+Esto significa que:
+
+- El artículo `1` tiene enlaces hacia los artículos `2`, `5` y `8`.
+- El artículo `2` tiene un enlace hacia el artículo `3`.
+- El artículo `3` no posee enlaces salientes.
+- El artículo `5` tiene enlaces hacia los artículos `1` y `4`.
+
+Esta estructura permite consultar de forma directa los vecinos de cada nodo y aplicar recorridos como BFS, DFS y PageRank.
+
+---
+
+## Lectura de datos
+
+La lectura de archivos se realiza mediante la clase `LectorArch`.
+
+Actualmente se consideran métodos para:
+
+| Método | Función |
+|---|---|
+| `leer_mtx_filtrado(ruta, limite)` | Lee enlaces entre artículos desde un archivo `.mtx`. |
+| `leer_mtx_categorias(ruta, limite)` | Lee relaciones entre artículos y categorías desde un archivo `.mtx`. |
+| `leer_nombres_articulos(ruta)` | Lee los nombres de los artículos desde un archivo `.txt`. |
+| `leer_nombres_categorias(ruta)` | Lee los nombres de las categorías desde un archivo `.txt`. |
+
+La lectura de archivos `.mtx` ignora líneas de comentario y líneas de metadatos. Luego interpreta las líneas con dos valores como relaciones entre identificadores.
 
 ---
