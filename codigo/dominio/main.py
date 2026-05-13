@@ -32,6 +32,7 @@ def main():
             grafo.agregar_categoria(Categoria(id_categoria, categoria_por_id.get(id_categoria, f"Categoria {id_categoria}")))
         grafo.asociar_articulo_categoria(id_articulo, id_categoria)
 
+    
     inicio = list(grafo.articulos.keys())[0]
     resultado_bfs = grafo.bfs(inicio)
     print("BFS:", resultado_bfs[:10])
