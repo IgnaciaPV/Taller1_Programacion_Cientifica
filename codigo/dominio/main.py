@@ -3,6 +3,7 @@ from dominio.categoria import Categoria
 from dominio.grafoarticulocategoria import GrafoArticuloCategoria
 from dominio.lector_datos import LectorArch
 
+
 def main():
     grafo = GrafoArticuloCategoria()
 
