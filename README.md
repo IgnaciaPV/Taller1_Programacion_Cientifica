@@ -44,14 +44,25 @@ Desarrollar un sistema en Python, basado en programación orientada a objetos, q
 - Generar resultados claros por consola o mediante archivos de salida.
 
 ---
-## 3. Dataset utilizado
+## Dataset utilizado
 
 El proyecto utiliza el dataset público:
 
 **Graphs SNAP Wiki — Kaggle**  
 <https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki>
 
-El dataset contiene información asociada a una red de Wikipedia, incluyendo:
+En particular, se trabaja principalmente con los archivos asociados a `wiki-topcats`, ya que estos contienen información relacionada con artículos, enlaces y categorías de Wikipedia.
+
+Entre los archivos utilizados se consideran:
+
+```text
+wiki-topcats.mtx
+wiki-topcats_Categories.mtx
+wiki-topcats_pagenames.txt
+wiki-topcats_Category_names.txt
+```
+
+El dataset contiene:
 
 - Enlaces entre artículos.
 - Identificadores de artículos.
@@ -60,5 +71,52 @@ El dataset contiene información asociada a una red de Wikipedia, incluyendo:
 - Relaciones entre artículos y categorías.
 
 Debido al tamaño del dataset original, el proyecto permite trabajar con un **subconjunto filtrado** de datos, definido mediante criterios razonables para facilitar el análisis y asegurar una ejecución eficiente.
+
+## Estructura del proyecto
+
+El proyecto se organiza separando datos, documentación, clases del dominio, lectores, ejecución principal y resultados.
+
+```text
+.
+├── datos/
+│   ├── rfa/
+│   ├── talk/
+│   ├── topcats/
+│   └── vote/
+│
+├── documentacion/
+│   ├── Taller.pdf
+│   ├── diagrama_clases.png
+│   └── informe.pdf
+│
+├── codigo/
+│   └── dominio/
+│       ├── articulos.py
+│       ├── categoria.py
+│       ├── grafoarticulocategoria.py
+│       ├── lector_datosmtx.py
+│       ├── main.py
+│       └── lector_datos.py
+│
+├── ranking_pagerank.txt
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+
+---
+
+## 6. Descripción de carpetas
+
+| Ruta | Descripción |
+|---|---|
+| `datos/rfa/` | Contiene archivos asociados a la red RFA del dataset. |
+| `datos/talk/` | Contiene archivos asociados a conversaciones o discusiones de Wikipedia. |
+| `datos/topcats/` | Contiene los archivos principales usados para artículos, categorías y enlaces. |
+| `datos/vote/` | Contiene archivos asociados a redes de votación. |
+| `documentacion/` | Contiene el enunciado del taller, el informe y el diagrama de clases. |
+| `codigo/dominio/` | Contiene las clases principales del modelo orientado a objetos y Contiene los módulos responsables de leer archivos `.txt` y `.mtx`. |
+| `src/main.py` | Archivo principal de ejecución del sistema. |
+| `ranking_pagerank.txt` | Archivo generado con los artículos mejor posicionados según PageRank. |
 
 ---
