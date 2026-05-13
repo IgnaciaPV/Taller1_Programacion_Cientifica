@@ -267,3 +267,90 @@ Actualmente se consideran métodos para:
 La lectura de archivos `.mtx` ignora líneas de comentario y líneas de metadatos. Luego interpreta las líneas con dos valores como relaciones entre identificadores.
 
 ---
+##  Algoritmos implementados
+
+###  Grado de entrada
+
+El grado de entrada de un artículo corresponde a la cantidad de artículos que apuntan hacia él.
+
+En términos del proyecto:
+
+```text
+grado_entrada(articulo) = cantidad de enlaces que llegan al artículo
+```
+
+Esta métrica permite identificar artículos que reciben muchas referencias desde otros artículos.
+
+---
+###  Grado de salida
+
+El grado de salida corresponde a la cantidad de artículos hacia los cuales apunta un artículo determinado.
+
+```text
+grado_salida(articulo) = cantidad de enlaces que salen desde el artículo
+```
+
+Esta métrica permite identificar artículos que referencian muchas otras páginas.
+
+---
+### BFS
+
+BFS, o búsqueda en anchura, recorre el grafo explorando primero los vecinos más cercanos al nodo inicial.
+
+En el proyecto se utiliza para observar la conectividad alcanzable desde un artículo de partida.
+
+---
+
+### DFS
+
+DFS, o búsqueda en profundidad, recorre el grafo avanzando lo más posible por una rama antes de retroceder.
+
+En el proyecto se utiliza para explorar caminos dentro de la red dirigida.
+
+---
+
+### Existencia de camino
+
+El método `existe_camino(origen, destino)` permite determinar si, partiendo desde un artículo de origen, es posible llegar a otro artículo de destino siguiendo los enlaces del grafo.
+
+---
+
+### PageRank simplificado
+
+El algoritmo PageRank estima la relevancia de cada artículo considerando los enlaces entrantes y la importancia de los artículos que lo referencian.
+
+La implementación considera:
+
+- Inicialización uniforme del ranking.
+- Número fijo de iteraciones.
+- Factor de amortiguación.
+- Distribución del valor de un artículo entre sus enlaces salientes.
+
+Parámetros por defecto:
+
+```text
+iteraciones = 20
+factor_amortiguacion = 0.85
+```
+
+---
+## Flujo general del programa
+
+El archivo `main.py` realiza las siguientes operaciones:
+
+1. Crea una instancia de `GrafoArticuloCategoria`.
+2. Lee enlaces desde `wiki-topcats.mtx`.
+3. Lee relaciones artículo-categoría desde `wiki-topcats_Categories.mtx`.
+4. Lee nombres de artículos desde `wiki-topcats_pagenames.txt`.
+5. Lee nombres de categorías desde `wiki-topcats_Category_names.txt`.
+6. Construye objetos de tipo `Articulo`.
+7. Construye objetos de tipo `Categoria`.
+8. Agrega enlaces dirigidos al grafo.
+9. Asocia artículos con categorías.
+10. Ejecuta BFS y DFS desde un artículo inicial.
+11. Verifica si existe camino entre dos artículos.
+12. Calcula artículos con mayor grado de entrada.
+13. Calcula PageRank.
+14. Exporta el ranking principal al archivo `ranking_pagerank.txt`.
+
+---
