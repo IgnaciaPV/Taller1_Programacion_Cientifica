@@ -96,22 +96,23 @@ class GrafoArticuloCategoria:
 
     def existe_camino(self, origen, destino):
         visitados = set()
-        cola = [origen]
+        # Guardamos nodo actual y el camino recorrido
+        cola = [(origen, [origen])]
 
         while cola:
-            actual = cola.pop(0)
-
+            actual, camino = cola.pop(0)
             if actual == destino:
-                return True
+                return camino
 
             if actual not in visitados:
                 visitados.add(actual)
 
                 for vecino in self.adyacencia.get(actual, []):
                     if vecino not in visitados:
-                        cola.append(vecino)
+                        nuevo_camino = camino + [vecino]
+                        cola.append((vecino, nuevo_camino))
 
-        return False
+        return None
 
     def pagerank(self, iteraciones=20, factor_amortiguacion=0.85):
         cantidad_nodos = len(self.articulos)
