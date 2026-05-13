@@ -79,16 +79,14 @@ El proyecto se organiza separando datos, documentación, clases del dominio, lec
 ```text
 .
 ├── datos/
-│   ├── wiki-topcats.mtx
-│   ├── wiki-topcats_Categories.mtx
+│   ├── README.txt
 │   ├── wiki-topcats_Category_names.txt
 │   └── wiki-topcats_pagenames.txt
 │
 ├── documentacion/
 │   ├── Diagrama_Clase_Taller1.pdf
 │   ├── Taller_1_PC_S1_2026.pdf
-│   ├── README.md
-│   └── .gitignore
+│   └── README.md
 │
 ├── codigo/
 │   └── dominio/
@@ -99,12 +97,14 @@ El proyecto se organiza separando datos, documentación, clases del dominio, lec
 │       ├── lector_datosmtx.py
 │       └── main.py
 │
+│
 ├── resultados/
 │   ├── ranking_pagerank.txt
 │   ├── grafico_grado_entrada.png
 │   ├── grafico_pagerank.png
 │   └── histograma_grados.png
 │
+└── .gitignore
 
 ```
 
@@ -114,14 +114,25 @@ El proyecto se organiza separando datos, documentación, clases del dominio, lec
 
 | Ruta | Descripción |
 |---|---|
-| `datos/` | Contiene los archivos principales usados para artículos, categorías y enlaces. |
+| `datos/` | Contiene archivos auxiliares del dataset y documentación para descargar los archivos `.mtx` necesarios. |
 | `documentacion/` | Contiene el enunciado del taller, el informe y el diagrama de clases. |
 | `codigo/dominio/` | Contiene las clases y lógica principal del sistema. |
 | `codigo/dominio/main.py` | Archivo principal de ejecución del sistema. |
 | `resultados/` | Contiene rankings y gráficos generados automáticamente. |
 
 ---
+## Descarga de datasets
 
+Los archivos `.mtx` del dataset no se incluyen directamente en el repositorio debido a su tamaño.
+
+Para ejecutar correctamente el proyecto, descargar desde:
+
+https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki
+
+Luego ubicar en la carpeta `datos/` los siguientes archivos:
+
+- `wiki-topcats.mtx`
+- `wiki-topcats_Categories.mtx`
 
 ## Funcionalidades principales
 
