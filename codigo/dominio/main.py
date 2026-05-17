@@ -47,6 +47,7 @@ def main():
 
         grafo.agregar_enlace(origen, destino)
 
+
     # Asociación artículo-categoría
     for id_articulo, id_categoria in relaciones:
         if id_articulo not in grafo.articulos:
@@ -57,14 +58,83 @@ def main():
 
         grafo.asociar_articulo_categoria(id_articulo, id_categoria)
 
-    # BFS
-    inicio = list(grafo.articulos.keys())[0]
-    resultado_bfs = grafo.bfs(inicio)
-    print("BFS:", resultado_bfs[:10])
 
-    # DFS
+    # ======================================
+    # VALIDACION DE CARGA
+    # ======================================
+
+    cantidad_articulos = len(grafo.articulos)
+    cantidad_categorias = len(grafo.categorias)
+    cantidad_enlaces = len(enlaces)
+    cantidad_relaciones = len(relaciones)
+
+    print("\nVALIDACION DE CARGA\n")
+
+    print(f"Cantidad de articulos cargados: {cantidad_articulos}")
+    print(f"Cantidad de categorias cargadas: {cantidad_categorias}")
+    print(f"Cantidad de enlaces procesados: {cantidad_enlaces}")
+    print(f"Cantidad de relaciones articulo-categoria: {cantidad_relaciones}")
+
+    # BFS
+    inicio = list(grafo.articulos.keys())[100]
+    resultado_bfs = grafo.bfs(inicio)
     resultado_dfs = grafo.dfs(inicio)
-    print("DFS:", resultado_dfs[:10])
+
+    nombre_inicio = grafo.articulos[inicio].nombre_articulo
+
+    print(f"\nPrimeros 10 nodos visitados mediante BFS desde {nombre_inicio}:")
+
+    print(f"{'Orden':<10}{'ID':<10}{'Articulo visitado'}")
+
+    for i, id_articulo in enumerate(resultado_bfs[:10], start=1):
+        nombre = grafo.articulos[id_articulo].nombre_articulo
+
+        print(f"{i:<10}{id_articulo:<10}{nombre}")
+
+    print(f"\nPrimeros 10 nodos visitados mediante DFS desde {nombre_inicio}:")
+
+    print(f"{'Orden':<10}{'ID':<10}{'Articulo visitado'}")
+
+    for i, id_articulo in enumerate(resultado_dfs[:10], start=1):
+        nombre = grafo.articulos[id_articulo].nombre_articulo
+
+        print(f"{i:<10}{id_articulo:<10}{nombre}")
+
+    # ======================================
+    # VERIFICACION DE EXISTENCIA DE CAMINO
+    # ======================================
+
+    articulo_origen = resultado_bfs[0]
+    articulo_destino = resultado_bfs[1]
+
+    nombre_origen = grafo.articulos[articulo_origen].nombre_articulo
+    nombre_destino = grafo.articulos[articulo_destino].nombre_articulo
+
+    camino = grafo.existe_camino(
+        articulo_origen,
+        articulo_destino
+    )
+
+    print("\nPrueba/Resultado:")
+
+    print(
+        f"Nodo origen -> {articulo_origen} - {nombre_origen}"
+    )
+
+    print(
+        f"Nodo destino -> {articulo_destino} - {nombre_destino}"
+    )
+
+    if camino:
+        print("¿Existe camino? -> Sí")
+        print("Camino encontrado ->", camino)
+
+    else:
+        print("¿Existe camino? -> No")
+
+
+
+
 
     # Camino simple
     lista_articulos = list(grafo.articulos.keys())
@@ -94,7 +164,7 @@ def main():
 
     for id_articulo, valor in top_pagerank:
         nombre = grafo.articulos[id_articulo].nombre_articulo
-        print(nombre, "-", round(valor, 6))
+        print(nombre, "-", format(valor, ".10f"))
 
     # Guardar ranking PageRank en txt
     with open(f"{carpeta_resultados}/ranking_pagerank.txt","w",encoding="utf-8") as archivo:
@@ -103,7 +173,43 @@ def main():
 
         for id_articulo, valor in top_pagerank:
             nombre = grafo.articulos[id_articulo].nombre_articulo
-            archivo.write(f"{nombre} - {round(valor, 6)}\n")
+            archivo.write(f"{nombre} - {format(valor, '.10f')}\n")
+
+    # ======================================
+    # RELACION ARTICULO - CATEGORIA
+    # ======================================
+
+    print("\nRelación entre artículos destacados y categorías:\n")
+
+    for id_articulo, valor in top_pagerank[:5]:
+
+        articulo = grafo.articulos[id_articulo]
+
+        print(
+            f"Articulo: {articulo.nombre_articulo}"
+        )
+
+        print(
+            f"PageRank: {format(valor, '.10f')}"
+        )
+
+        if articulo.categorias:
+
+            print("Categorias asociadas:")
+
+            for id_categoria in articulo.categorias:
+
+                if id_categoria in grafo.categorias:
+                    nombre_categoria = grafo.categorias[
+                        id_categoria
+                    ].nombre_categoria
+
+                    print("-", nombre_categoria)
+
+        else:
+            print("Sin categorias asociadas")
+
+        print()
 
     # =========================
     # GRAFICO TOP GRADO ENTRADA
@@ -139,6 +245,71 @@ def main():
     )
 
     plt.close()
+
+    # ======================================
+    # TOP GRADO DE SALIDA
+    # ======================================
+
+    grados_salida = []
+
+    for id_articulo in grafo.articulos:
+        grado = grafo.grado_salida(id_articulo)
+
+        grados_salida.append(
+            (id_articulo, grado)
+        )
+
+    grados_salida.sort(
+        key=lambda x: x[1],
+        reverse=True
+    )
+
+    top_salida = grados_salida[:10]
+
+    print("\nTop articulos con mayor grado de salida:\n")
+
+    for id_articulo, grado in top_salida:
+        nombre = grafo.articulos[id_articulo].nombre_articulo
+
+        print(f"{nombre} - {grado}")
+
+    # =========================
+    # GRAFICO TOP GRADO SALIDA
+    # =========================
+
+    nombres_salida = []
+    valores_salida = []
+
+    for id_articulo, grado in top_salida:
+        nombres_salida.append(
+            grafo.articulos[id_articulo].nombre_articulo
+        )
+
+        valores_salida.append(grado)
+
+    plt.figure(figsize=(12, 5))
+
+    plt.bar(
+        nombres_salida,
+        valores_salida
+    )
+
+    plt.title("Top articulos con mayor grado de salida")
+
+    plt.xlabel("Articulos")
+
+    plt.ylabel("Cantidad de enlaces salientes")
+
+    plt.xticks(rotation=45, ha="right")
+
+    plt.tight_layout()
+
+    plt.savefig(
+        f"{carpeta_resultados}/top_grado_salida.png"
+    )
+
+    plt.close()
+
 
     # =========================
     # GRAFICO TOP PAGERANK
@@ -204,6 +375,150 @@ def main():
     )
 
     plt.close()
+
+    # ======================================
+    # DISTRIBUCION DE GRADOS
+    # ======================================
+
+    rangos = {
+        "0-5": 0,
+        "6-10": 0,
+        "11-20": 0,
+        "21-50": 0,
+        "51+": 0
+    }
+
+    for grado in grados_totales:
+
+        if grado <= 5:
+            rangos["0-5"] += 1
+
+        elif grado <= 10:
+            rangos["6-10"] += 1
+
+        elif grado <= 20:
+            rangos["11-20"] += 1
+
+        elif grado <= 50:
+            rangos["21-50"] += 1
+
+        else:
+            rangos["51+"] += 1
+
+    plt.figure(figsize=(8, 5))
+
+    plt.bar(
+        rangos.keys(),
+        rangos.values()
+    )
+
+    plt.title("Distribucion de grados")
+    plt.xlabel("Rangos de enlaces entrantes")
+    plt.ylabel("Cantidad de articulos")
+
+    plt.tight_layout()
+
+    plt.savefig(
+        f"{carpeta_resultados}/distribucion_grados.png"
+    )
+
+    plt.show()
+
+    # ======================================
+    # COMPARACION PAGERANK VS GRADO ENTRADA
+    # ======================================
+
+    print("\nComparacion PageRank vs grado de entrada:\n")
+
+    for id_articulo, valor in top_pagerank:
+        nombre = grafo.articulos[id_articulo].nombre_articulo
+
+        grado = grafo.grado_entrada(id_articulo)
+
+        print(
+            f"{nombre} | "
+            f"PageRank: {format(valor, '.10f')} | "
+            f"Grado entrada: {grado}"
+        )
+
+    # ======================================
+    # PRUEBA CAMINO MAS EXTENSO
+    # ======================================
+
+    origen = resultado_bfs[0]
+    destino = resultado_bfs[9]
+
+    nombre_origen = grafo.articulos[origen].nombre_articulo
+    nombre_destino = grafo.articulos[destino].nombre_articulo
+
+    camino_extenso = grafo.existe_camino(
+        origen,
+        destino
+    )
+
+    print("\nPrueba de camino mas extensa:\n")
+
+    print(f"Origen -> {origen} - {nombre_origen}")
+    print(f"Destino -> {destino} - {nombre_destino}")
+
+    if camino_extenso:
+
+        print("Existe camino -> Sí")
+
+        print("Camino encontrado:")
+
+        for nodo in camino_extenso:
+            nombre = grafo.articulos[nodo].nombre_articulo
+
+            print(f"- {nodo} - {nombre}")
+
+    else:
+        print("Existe camino -> No")
+
+    # ======================================
+    # EXPORTAR RESULTADOS PAGERANK
+    # ======================================
+
+    with open(
+            f"{carpeta_resultados}/ranking_pagerank.txt",
+            "w",
+            encoding="utf-8"
+    ) as archivo:
+
+        archivo.write("TOP PAGERANK\n\n")
+
+        for id_articulo, valor in top_pagerank:
+
+            articulo = grafo.articulos[id_articulo]
+
+            archivo.write(
+                f"Articulo: {articulo.nombre_articulo}\n"
+            )
+
+            archivo.write(
+                f"Valor PageRank: {format(valor, '.10f')}\n"
+            )
+
+            archivo.write("Categorias:\n")
+
+            if articulo.categorias:
+
+                for id_categoria in articulo.categorias:
+
+                    if id_categoria in grafo.categorias:
+                        nombre_categoria = (
+                            grafo.categorias[id_categoria]
+                            .nombre_categoria
+                        )
+
+                        archivo.write(
+                            f"- {nombre_categoria}\n"
+                        )
+
+            else:
+                archivo.write("- Sin categorias\n")
+
+            archivo.write("\n")
 
 
 if __name__ == "__main__":
