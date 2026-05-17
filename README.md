@@ -157,15 +157,28 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 
 Los archivos `.mtx` del dataset no se incluyen directamente en el repositorio debido a su tamaño.
 
-Para ejecutar correctamente el proyecto, descargar desde:
+Descargar desde:
 
 https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki
 
-Luego ubicar en la carpeta `datos/` los siguientes archivos:
+Para ejecutar correctamente el proyecto, la carpeta `datos/` debe contener los siguientes archivos:
 
-- `wiki-topcats.mtx`
-- `wiki-topcats_Categories.mtx`
+```text
+wiki-topcats.mtx
+wiki-topcats_Categories.mtx
+wiki-topcats_pagenames.txt
+wiki-topcats_Category_names.txt
+```
 
+| Archivo | Descripción |
+|---|---|
+| `wiki-topcats.mtx` | Contiene las relaciones de enlace entre artículos de Wikipedia. Cada par de identificadores representa una arista dirigida desde un artículo de origen hacia un artículo de destino. Este archivo se utiliza para construir la lista de adyacencia del grafo. |
+| `wiki-topcats_Categories.mtx` | Contiene las relaciones entre artículos y categorías. Cada par de identificadores permite asociar un artículo con una categoría determinada. |
+| `wiki-topcats_pagenames.txt` | Contiene los nombres asociados a los identificadores numéricos de cada artículo. Permite reemplazar los IDs por nombres comprensibles en los resultados. |
+| `wiki-topcats_Category_names.txt` | Contiene los nombres asociados a los identificadores de cada categoría. Permite interpretar las asociaciones artículo-categoría de forma clara. |
+
+> [!IMPORTANT]
+> Si alguno de estos cuatro archivos no está presente en `datos/`, el programa puede fallar durante la carga de datos.9
 ---
 
 ## Instalación y ejecución
@@ -197,11 +210,27 @@ pip install matplotlib
 
 ### Ejecución del programa
 
-Desde la carpeta `codigo/dominio/`, ejecutar:
+
+
+Debido a la estructura modular del proyecto, se recomienda ejecutar el programa desde la carpeta `codigo/dominio/`.
+
+En Linux o macOS:
 
 ```bash
+cd codigo/dominio
+PYTHONPATH=.. python3 main.py
+```
+
+En Windows PowerShell:
+
+```powershell
+cd codigo/dominio
+$env:PYTHONPATH=".."
 python main.py
 ```
+
+> [!NOTE]
+> Esta forma de ejecución permite que Python encuentre correctamente el paquete `dominio` y que las rutas relativas hacia `../../datos/` y `../../resultados/` funcionen de forma adecuada.
 
 > [!NOTE]
 > Al ejecutar el programa, se construye el grafo dirigido, se calculan métricas estructurales, se aplican recorridos BFS/DFS, se estima PageRank simplificado y se generan archivos de salida en la carpeta `resultados/`.
@@ -227,6 +256,17 @@ python main.py
 | PageRank simplificado | Implementado |
 | Exportación de ranking a `.txt` | Implementado |
 
+---
+## Decisiones de diseño
+
+| Decisión | Justificación |
+|---|---|
+| Uso de programación orientada a objetos | Permite representar artículos, categorías y grafo como entidades separadas, manteniendo responsabilidades claras. |
+| Uso de diccionarios | Facilita el acceso directo a artículos y categorías mediante sus identificadores. |
+| Lista de adyacencia | Es adecuada para representar grafos dispersos, ya que almacena solo los enlaces existentes. |
+| Subconjunto de 10.000 enlaces y 10.000 relaciones artículo-categoría | Permite trabajar con datos reales manteniendo tiempos de ejecución razonables y resultados reproducibles. |
+| No uso de `networkx` | Permite implementar manualmente la estructura del grafo y los algoritmos solicitados. |
+| Exportación de resultados | Facilita la revisión posterior mediante archivos `.txt` y gráficos `.png`. |
 ---
 ## Modelo orientado a objetos
 
@@ -461,9 +501,38 @@ El programa muestra:
 | `top_grado_entrada.png` | Gráfico de los artículos con mayor cantidad de enlaces entrantes. |
 | `top_pagerank.png` | Gráfico de los artículos con mayor valor de PageRank. |
 | `histograma_grados.png` | Histograma de distribución de grados de entrada en el subconjunto analizado. |
+| `ranking_pagerank_categorias.txt` | Ranking de artículos según PageRank incluyendo sus categorías asociadas para apoyar la interpretación temática. |
 
+---
+## Interpretación de resultados
+Los resultados generados permiten analizar la relevancia estructural de los artículos desde distintas perspectivas.
+
+| Resultado | Interpretación |
+|---|---|
+| Grado de entrada | Un artículo con alto grado de entrada recibe muchas referencias desde otros artículos, por lo que puede considerarse un nodo altamente citado dentro del subconjunto. |
+| Grado de salida | Un artículo con alto grado de salida referencia muchas páginas, lo que puede indicar un rol de conexión hacia otros temas. |
+| BFS | Permite observar qué artículos son alcanzables desde un nodo inicial siguiendo enlaces por niveles de cercanía. |
+| DFS | Permite explorar rutas profundas dentro de la red dirigida. |
+| Camino simple | Permite verificar si existe una ruta dirigida entre dos artículos específicos. |
+| PageRank | Permite estimar la importancia de un artículo considerando no solo cuántos enlaces recibe, sino también la relevancia de los artículos que lo enlazan. |
+| Categorías | Permiten contextualizar temáticamente los artículos relevantes y observar si los nodos destacados pertenecen a áreas comunes del conocimiento. |
+
+En conjunto, el análisis permite comparar si los artículos con mayor grado de entrada coinciden o no con los artículos mejor posicionados por PageRank. Esta comparación es relevante porque un alto número de enlaces entrantes no siempre implica mayor importancia global: PageRank también considera la importancia de los nodos que entregan esos enlaces.
+---
+## Relación entre PageRank y categorías
+
+La asociación entre artículos y categorías permite interpretar los resultados de PageRank desde una perspectiva temática. Una vez identificados los artículos con mayor ranking, se revisan sus categorías asociadas para observar posibles concentraciones temáticas dentro del subconjunto analizado.
+
+Este análisis permite responder preguntas como:
+
+- ¿Los artículos con mayor PageRank pertenecen a categorías similares?
+- ¿Existen categorías que concentran artículos altamente referenciados?
+- ¿Los nodos con mayor grado de entrada coinciden con los nodos más relevantes según PageRank?
+- ¿La relevancia estructural de un artículo se relaciona con su categoría temática?
+
+De esta forma, el sistema no solo entrega rankings numéricos, sino que también permite interpretar la organización temática de la red.
+---
 ## Cumplimiento de requerimientos del laboratorio
-
 | Requerimiento del laboratorio | Evidencia en el proyecto |
 |---|---|
 | Uso de Python | Todo el sistema está implementado en Python. |
@@ -478,10 +547,21 @@ El programa muestra:
 | PageRank simplificado | Se calcula PageRank con 20 iteraciones y factor de amortiguación 0.85. |
 | Resultados | Se generan archivos `.txt` y gráficos `.png` en la carpeta `resultados/`. |
 | Documentación | El README describe estructura, clases, algoritmos, datos y ejecución. |
-
+---
 ## Limitaciones del proyecto
 
 - El análisis se realiza sobre un subconjunto del dataset original, por lo que los resultados no representan la totalidad de Wikipedia.
 - El PageRank implementado corresponde a una versión simplificada, adecuada para el objetivo académico del laboratorio.
 - Los rankings dependen directamente del subconjunto cargado y del orden de lectura de los archivos.
 - La asociación con categorías se utiliza como apoyo interpretativo, no como una segunda red principal de enlaces.
+
+---
+## Entregables incluidos
+
+| Entregable solicitado | Ubicación en el repositorio |
+|---|---|
+| Código fuente | `codigo/dominio/` |
+| README pertinente | `README.md` |
+| Diagrama de clases | `documentacion/Diagrama_Clase_Taller1.pdf` |
+| Informe de resultados y conclusiones | `documentacion/` |
+| Resultados generados | `resultados/` |
