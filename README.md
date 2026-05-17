@@ -236,6 +236,24 @@ python main.py
 
 ---
 
+### Verificación de ejecución
+
+Si el programa se ejecuta correctamente, la consola mostrará una salida similar a:
+
+```text
+BFS: [...]
+DFS: [...]
+Camino encontrado: [...]
+Articulos con mayor grado de entrada:
+...
+Top PageRank:
+...
+```
+
+Además, se generarán automáticamente los archivos de resultados en la carpeta `resultados/`.
+
+---
+
 ## Funcionalidades principales
 
 | Funcionalidad | Estado |
@@ -577,3 +595,4 @@ De esta forma, el sistema no solo entrega rankings numéricos, sino que también
 | Diagrama de clases | `documentacion/Diagrama_Clase_Taller1.pdf` |
 | Informe de resultados y conclusiones | `documentacion/` |
 | Resultados generados | `resultados/` |
+
