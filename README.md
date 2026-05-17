@@ -110,13 +110,16 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 .
 ├── datos/
 │   ├── README.txt
-│   ├── wiki-topcats_Category_names.txt
-│   └── wiki-topcats_pagenames.txt
+│   ├── wiki-topcats.mtx
+│   ├── wiki-topcats_Categories.mtx
+│   ├── wiki-topcats_pagenames.txt
+│   └── wiki-topcats_Category_names.txt
 │
 ├── documentacion/
 │   ├── Diagrama_Clase_Taller1.pdf
 │   ├── Taller_1_PC_S1_2026.pdf
-│   └── README.md
+│   ├── README.md
+│   └── Informe_Taller1.pdf
 │
 ├── codigo/
 │   └── dominio/
