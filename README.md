@@ -147,11 +147,11 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 
 | Ruta | Descripción |
 |---|---|
-| `datos/` | Contiene archivos auxiliares del dataset y documentación para descargar los archivos `.mtx` necesarios. |
-| `documentacion/` | Contiene el enunciado del taller, el informe y el diagrama de clases. |
-| `codigo/dominio/` | Contiene las clases y lógica principal del sistema. |
-| `codigo/dominio/main.py` | Archivo principal de ejecución del sistema. |
-| `resultados/` | Contiene rankings y gráficos generados automáticamente. |
+| `datos/` | Contiene los archivos requeridos del dataset `wiki-topcats` o las instrucciones para descargarlos desde Kaggle. |
+| `documentacion/` | Contiene el enunciado del taller, el informe de resultados y el diagrama de clases. |
+| `codigo/dominio/` | Contiene las clases del dominio, la lectura de datos, la estructura del grafo y la ejecución principal. |
+| `codigo/dominio/main.py` | Coordina la carga de datos, construcción del grafo, ejecución de algoritmos y generación de resultados. |
+| `resultados/` | Contiene los rankings y gráficos generados automáticamente por el sistema. |
 
 ---
 ## Descarga de datasets
