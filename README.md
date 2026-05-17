@@ -1,20 +1,48 @@
+<div align="center">
+
 # Taller 1 Programación Científica
 
-- Ignacia Peña
-- Francisco Cortés
-- Fabián Díaz
+### Análisis estructural de una red de artículos de Wikipedia mediante grafos dirigidos, métricas topológicas y PageRank simplificado
 
+<br>
 
-<p align="center">
-  <b>Análisis estructural de una red de artículos de Wikipedia mediante grafos dirigidos, métricas topológicas y PageRank simplificado.</b>
-</p>
+<table>
+  <tr>
+    <td><b>Integrantes</b></td>
+    <td>Francisco Cortés · Fabián Díaz · Ignacia Peña</td>
+  </tr>
+  <tr>
+    <td><b>Asignatura</b></td>
+    <td>Minor Programación Científica</td>
+  </tr>
+  <tr>
+    <td><b>Profesor</b></td>
+    <td>Cristhian Alberto Rabi Reyes</td>
+  </tr>
+  <tr>
+    <td><b>Ayudante</b></td>
+    <td>Roberto Javier Fernández Berrios</td>
+  </tr>
+  <tr>
+    <td><b>Establecimiento</b></td>
+    <td>Universidad Católica del Norte</td>
+  </tr>
+  <tr>
+    <td><b>Fecha</b></td>
+    <td>16/05/2026</td>
+  </tr>
+</table>
 
-<p align="center">
+<br>
+
+<p>
   <img src="https://img.shields.io/badge/Python-3.10%2B-blue" alt="Python">
   <img src="https://img.shields.io/badge/Paradigma-POO-green" alt="POO">
-  <img src="https://img.shields.io/badge/Grafos-Dirigidos-orange" alt="Grafos">
+  <img src="https://img.shields.io/badge/Grafos-Dirigidos-orange" alt="Grafos dirigidos">
   <img src="https://img.shields.io/badge/NetworkX-No%20utilizado-red" alt="No NetworkX">
 </p>
+
+</div>
 
 ---
 
@@ -78,7 +106,7 @@ El subconjunto no pretende representar la totalidad de Wikipedia, sino permitir 
 
 ## Estructura del proyecto
 
-El proyecto se organiza separando datos, documentación, clases del dominio, lectores, ejecución principal y resultados.
+El proyecto se organiza separando los archivos de datos, la documentación académica, las clases del dominio, los métodos de lectura, la ejecución principal y los resultados generados. Esta separación permite mantener una estructura modular y facilita la revisión del código.
 
 ```text
 .
@@ -392,3 +420,27 @@ El programa muestra:
 | `top_grado_entrada.png` | Gráfico de los artículos con mayor cantidad de enlaces entrantes. |
 | `top_pagerank.png` | Gráfico de los artículos con mayor valor de PageRank. |
 | `histograma_grados.png` | Histograma de distribución de grados de entrada en el subconjunto analizado. |
+
+## Cumplimiento de requerimientos del laboratorio
+
+| Requerimiento del laboratorio | Evidencia en el proyecto |
+|---|---|
+| Uso de Python | Todo el sistema está implementado en Python. |
+| Programación orientada a objetos | Se utilizan las clases `Articulo`, `Categoria` y `GrafoArticuloCategoria`. |
+| No uso de librerías de grafos | La representación del grafo se implementa manualmente mediante diccionarios y listas de adyacencia. |
+| Carga de datos reales | Se leen archivos `.mtx` y `.txt` del dataset `wiki-topcats`. |
+| Generación de subconjunto | Se cargan 10.000 enlaces y 10.000 relaciones artículo-categoría. |
+| Representación del grafo | Se usa una lista de adyacencia para representar enlaces dirigidos entre artículos. |
+| Métricas básicas | Se calcula grado de entrada, grado de salida y ranking por grado de entrada. |
+| Recorridos | Se implementan BFS y DFS. |
+| Caminos simples | Se implementa búsqueda de camino entre dos artículos. |
+| PageRank simplificado | Se calcula PageRank con 20 iteraciones y factor de amortiguación 0.85. |
+| Resultados | Se generan archivos `.txt` y gráficos `.png` en la carpeta `resultados/`. |
+| Documentación | El README describe estructura, clases, algoritmos, datos y ejecución. |
+
+## Limitaciones del proyecto
+
+- El análisis se realiza sobre un subconjunto del dataset original, por lo que los resultados no representan la totalidad de Wikipedia.
+- El PageRank implementado corresponde a una versión simplificada, adecuada para el objetivo académico del laboratorio.
+- Los rankings dependen directamente del subconjunto cargado y del orden de lectura de los archivos.
+- La asociación con categorías se utiliza como apoyo interpretativo, no como una segunda red principal de enlaces.
