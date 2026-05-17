@@ -70,7 +70,11 @@ El dataset contiene:
 - Categorías asociadas a los artículos.
 - Relaciones entre artículos y categorías.
 
-Debido al tamaño del dataset original, el proyecto permite trabajar con un **subconjunto filtrado** de datos, definido mediante criterios razonables para facilitar el análisis y asegurar una ejecución eficiente.
+```markdown
+Debido al tamaño del dataset original, se trabaja con un subconjunto de 10.000 enlaces entre artículos y 10.000 relaciones artículo-categoría. Este filtrado permite mantener una ejecución manejable, reproducible y suficiente para aplicar métricas estructurales, recorridos y PageRank simplificado.
+
+El subconjunto no pretende representar la totalidad de Wikipedia, sino permitir un análisis estructural acotado y verificable dentro de los objetivos del laboratorio.
+```
 
 ## Estructura del proyecto
 
@@ -100,8 +104,8 @@ El proyecto se organiza separando datos, documentación, clases del dominio, lec
 │
 ├── resultados/
 │   ├── ranking_pagerank.txt
-│   ├── grafico_grado_entrada.png
-│   ├── grafico_pagerank.png
+│   ├── top_grado_entrada.png
+│   ├── top_pagerank.png
 │   └── histograma_grados.png
 │
 └── .gitignore
