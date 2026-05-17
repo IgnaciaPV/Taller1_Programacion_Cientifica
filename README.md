@@ -101,7 +101,6 @@ El dataset contiene:
 Debido al tamaño del dataset original, se trabaja con un subconjunto de 10.000 enlaces entre artículos y 10.000 relaciones artículo-categoría. Este filtrado permite mantener una ejecución manejable, reproducible y suficiente para aplicar métricas estructurales, recorridos y PageRank simplificado.
 
 El subconjunto no pretende representar la totalidad de Wikipedia, sino permitir un análisis estructural acotado y verificable dentro de los objetivos del laboratorio.
-```
 
 ## Estructura del proyecto
 
