@@ -235,6 +235,7 @@ python main.py
 > Al ejecutar el programa, se construye el grafo dirigido, se calculan métricas estructurales, se aplican recorridos BFS/DFS, se estima PageRank simplificado y se generan archivos de salida en la carpeta `resultados/`.
 
 ---
+
 ## Funcionalidades principales
 
 | Funcionalidad | Estado |
@@ -256,6 +257,7 @@ python main.py
 | Exportación de ranking a `.txt` | Implementado |
 
 ---
+
 ## Decisiones de diseño
 
 | Decisión | Justificación |
@@ -390,6 +392,7 @@ Actualmente se consideran métodos para:
 La lectura de archivos `.mtx` ignora líneas de comentario y líneas de metadatos. Luego interpreta las líneas con dos valores como relaciones entre identificadores.
 
 ---
+
 ##  Algoritmos implementados
 
 ###  Grado de entrada
@@ -405,6 +408,7 @@ grado_entrada(articulo) = cantidad de enlaces que llegan al artículo
 Esta métrica permite identificar artículos que reciben muchas referencias desde otros artículos.
 
 ---
+
 ###  Grado de salida
 
 El grado de salida corresponde a la cantidad de artículos hacia los cuales apunta un artículo determinado.
@@ -457,6 +461,7 @@ factor_amortiguacion = 0.85
 ```
 
 ---
+
 ## Flujo general del programa
 
 El archivo `main.py` realiza las siguientes operaciones:
@@ -503,6 +508,7 @@ El programa muestra:
 | `ranking_pagerank_categorias.txt` | Ranking de artículos según PageRank incluyendo sus categorías asociadas para apoyar la interpretación temática. |
 
 ---
+
 ## Interpretación de resultados
 Los resultados generados permiten analizar la relevancia estructural de los artículos desde distintas perspectivas.
 
@@ -519,6 +525,7 @@ Los resultados generados permiten analizar la relevancia estructural de los art�
 En conjunto, el análisis permite comparar si los artículos con mayor grado de entrada coinciden o no con los artículos mejor posicionados por PageRank. Esta comparación es relevante porque un alto número de enlaces entrantes no siempre implica mayor importancia global: PageRank también considera la importancia de los nodos que entregan esos enlaces.
 
 ---
+
 ## Relación entre PageRank y categorías
 
 La asociación entre artículos y categorías permite interpretar los resultados de PageRank desde una perspectiva temática. Una vez identificados los artículos con mayor ranking, se revisan sus categorías asociadas para observar posibles concentraciones temáticas dentro del subconjunto analizado.
@@ -531,7 +538,9 @@ Este análisis permite responder preguntas como:
 - ¿La relevancia estructural de un artículo se relaciona con su categoría temática?
 
 De esta forma, el sistema no solo entrega rankings numéricos, sino que también permite interpretar la organización temática de la red.
+
 ---
+
 ## Cumplimiento de requerimientos del laboratorio
 | Requerimiento del laboratorio | Evidencia en el proyecto |
 |---|---|
@@ -547,7 +556,9 @@ De esta forma, el sistema no solo entrega rankings numéricos, sino que también
 | PageRank simplificado | Se calcula PageRank con 20 iteraciones y factor de amortiguación 0.85. |
 | Resultados | Se generan archivos `.txt` y gráficos `.png` en la carpeta `resultados/`. |
 | Documentación | El README describe estructura, clases, algoritmos, datos y ejecución. |
+
 ---
+
 ## Limitaciones del proyecto
 
 - El análisis se realiza sobre un subconjunto del dataset original, por lo que los resultados no representan la totalidad de Wikipedia.
@@ -556,6 +567,7 @@ De esta forma, el sistema no solo entrega rankings numéricos, sino que también
 - La asociación con categorías se utiliza como apoyo interpretativo, no como una segunda red principal de enlaces.
 
 ---
+
 ## Entregables incluidos
 
 | Entregable solicitado | Ubicación en el repositorio |
