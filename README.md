@@ -212,7 +212,7 @@ Método principal:
 
 ### Clase `GrafoArticuloCategoria`
 
-Representa el grafo dirigido de artículos y categorías.
+Representa el grafo dirigido de artículos de Wikipedia y mantiene, además, la asociación auxiliar entre artículos y categorías. La estructura principal del grafo corresponde a enlaces dirigidos entre artículos, mientras que las categorías se utilizan para contextualizar e interpretar los resultados obtenidos.
 
 Atributos principales:
 
@@ -369,3 +369,26 @@ El archivo `main.py` realiza las siguientes operaciones:
 14. Exporta el ranking principal al archivo `ranking_pagerank.txt`.
 
 ---
+
+## Resultados generados
+
+Al ejecutar `main.py`, el sistema genera resultados por consola y archivos en la carpeta `resultados/`.
+
+### Salida por consola
+
+El programa muestra:
+
+- Primeros nodos visitados mediante BFS.
+- Primeros nodos visitados mediante DFS.
+- Camino simple encontrado entre dos artículos, si existe.
+- Artículos con mayor grado de entrada.
+- Top de artículos según PageRank.
+
+### Archivos generados
+
+| Archivo | Descripción |
+|---|---|
+| `ranking_pagerank.txt` | Ranking textual de los artículos con mayor PageRank. |
+| `top_grado_entrada.png` | Gráfico de los artículos con mayor cantidad de enlaces entrantes. |
+| `top_pagerank.png` | Gráfico de los artículos con mayor valor de PageRank. |
+| `histograma_grados.png` | Histograma de distribución de grados de entrada en el subconjunto analizado. |
