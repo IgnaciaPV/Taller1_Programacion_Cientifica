@@ -176,7 +176,7 @@ wiki-topcats_Category_names.txt
 | `wiki-topcats_Category_names.txt` | Contiene los nombres asociados a los identificadores de cada categoría. Permite interpretar las asociaciones artículo-categoría de forma clara. |
 
 > [!IMPORTANT]
-> Si alguno de estos cuatro archivos no está presente en `datos/`, el programa puede fallar durante la carga de datos.9
+> Si alguno de estos cuatro archivos no está presente en `datos/`, el programa puede fallar durante la carga de datos.
 ---
 
 ## Instalación y ejecución
