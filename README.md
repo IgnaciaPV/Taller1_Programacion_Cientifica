@@ -517,6 +517,7 @@ Los resultados generados permiten analizar la relevancia estructural de los art�
 | Categorías | Permiten contextualizar temáticamente los artículos relevantes y observar si los nodos destacados pertenecen a áreas comunes del conocimiento. |
 
 En conjunto, el análisis permite comparar si los artículos con mayor grado de entrada coinciden o no con los artículos mejor posicionados por PageRank. Esta comparación es relevante porque un alto número de enlaces entrantes no siempre implica mayor importancia global: PageRank también considera la importancia de los nodos que entregan esos enlaces.
+
 ---
 ## Relación entre PageRank y categorías
 
