@@ -182,7 +182,6 @@ wiki-topcats_Category_names.txt
 ## Instalación y ejecución
 
 > [!IMPORTANT]
-> > [!IMPORTANT]
 > Antes de ejecutar el programa, asegúrate de que la carpeta `datos/` contenga los cuatro archivos requeridos del dataset: `wiki-topcats.mtx`, `wiki-topcats_Categories.mtx`, `wiki-topcats_pagenames.txt` y `wiki-topcats_Category_names.txt`.
 
 ### Requisitos del sistema
@@ -197,7 +196,7 @@ wiki-topcats_Category_names.txt
 |---|---|
 | Python | Versión 3.10 o superior. |
 | Matplotlib | Librería utilizada para generar gráficos de resultados. |
-| Dataset | Archivos `wiki-topcats.mtx` y `wiki-topcats_Categories.mtx` ubicados en `datos/`. |
+| Dataset | Archivos `wiki-topcats.mtx`, `wiki-topcats_Categories.mtx`, `wiki-topcats_pagenames.txt` y `wiki-topcats_Category_names.txt` ubicados en `datos/`. |
 
 ### Instalación de dependencias
 
