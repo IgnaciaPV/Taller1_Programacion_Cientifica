@@ -155,17 +155,71 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 ---
 ## Descarga de datasets
 
-Los archivos `.mtx` del dataset no se incluyen directamente en el repositorio debido a su tamaño.
+El proyecto utiliza archivos del dataset **Graphs SNAP Wiki**, específicamente los asociados a `wiki-topcats`.
 
-Para ejecutar correctamente el proyecto, descargar desde:
+Los archivos de mayor tamaño no se incluyen directamente en el repositorio debido a su peso, por lo que deben descargarse desde Kaggle:
 
-https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki
+<https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki>
 
-Luego ubicar en la carpeta `datos/` los siguientes archivos:
+Para ejecutar correctamente el proyecto, la carpeta `datos/` debe contener los siguientes archivos:
 
-- `wiki-topcats.mtx`
-- `wiki-topcats_Categories.mtx`
+```text
+wiki-topcats.mtx
+wiki-topcats_Categories.mtx
+wiki-topcats_pagenames.txt
+wiki-topcats_Category_names.txt
+```
 
+| Archivo | Descripción |
+|---|---|
+| `wiki-topcats.mtx` | Contiene las relaciones de enlace entre artículos de Wikipedia. Cada par de identificadores representa una arista dirigida desde un artículo de origen hacia un artículo de destino. Este archivo se utiliza para construir la lista de adyacencia del grafo. |
+| `wiki-topcats_Categories.mtx` | Contiene las relaciones entre artículos y categorías. Cada par de identificadores permite asociar un artículo con una categoría determinada. |
+| `wiki-topcats_pagenames.txt` | Contiene los nombres asociados a los identificadores numéricos de cada artículo. Permite reemplazar los IDs por nombres comprensibles en los resultados. |
+| `wiki-topcats_Category_names.txt` | Contiene los nombres asociados a los identificadores de cada categoría. Permite interpretar las asociaciones artículo-categoría de forma clara. |
+
+> [!IMPORTANT]
+> Si alguno de estos archivos no se encuentra en la carpeta `datos/`, el programa puede fallar durante la carga de datos.
+---
+
+## Instalación y ejecución
+
+> [!IMPORTANT]
+> Antes de ejecutar el programa, asegúrate de haber descargado los archivos `.mtx` desde Kaggle y ubicarlos correctamente en la carpeta `datos/`.
+
+### Requisitos del sistema
+
+<p>
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/Dependencia-matplotlib-orange" alt="Matplotlib">
+  <img src="https://img.shields.io/badge/Ejecución-Consola-green" alt="Consola">
+</p>
+
+| Requisito | Descripción |
+|---|---|
+| Python | Versión 3.10 o superior. |
+| Matplotlib | Librería utilizada para generar gráficos de resultados. |
+| Dataset | Archivos `wiki-topcats.mtx` y `wiki-topcats_Categories.mtx` ubicados en `datos/`. |
+
+### Instalación de dependencias
+
+Ejecutar el siguiente comando en la terminal:
+
+```bash
+pip install matplotlib
+```
+
+### Ejecución del programa
+
+Desde la carpeta `codigo/dominio/`, ejecutar:
+
+```bash
+python main.py
+```
+
+> [!NOTE]
+> Al ejecutar el programa, se construye el grafo dirigido, se calculan métricas estructurales, se aplican recorridos BFS/DFS, se estima PageRank simplificado y se generan archivos de salida en la carpeta `resultados/`.
+
+---
 ## Funcionalidades principales
 
 | Funcionalidad | Estado |
