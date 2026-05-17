@@ -182,7 +182,8 @@ wiki-topcats_Category_names.txt
 ## Instalación y ejecución
 
 > [!IMPORTANT]
-> Antes de ejecutar el programa, asegúrate de haber descargado los archivos `.mtx` desde Kaggle y ubicarlos correctamente en la carpeta `datos/`.
+> > [!IMPORTANT]
+> Antes de ejecutar el programa, asegúrate de que la carpeta `datos/` contenga los cuatro archivos requeridos del dataset: `wiki-topcats.mtx`, `wiki-topcats_Categories.mtx`, `wiki-topcats_pagenames.txt` y `wiki-topcats_Category_names.txt`.
 
 ### Requisitos del sistema
 
