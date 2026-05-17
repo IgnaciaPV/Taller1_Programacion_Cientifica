@@ -98,7 +98,7 @@ El dataset contiene:
 - Categorías asociadas a los artículos.
 - Relaciones entre artículos y categorías.
 
-```markdown
+```text
 Debido al tamaño del dataset original, se trabaja con un subconjunto de 10.000 enlaces entre artículos y 10.000 relaciones artículo-categoría. Este filtrado permite mantener una ejecución manejable, reproducible y suficiente para aplicar métricas estructurales, recorridos y PageRank simplificado.
 
 El subconjunto no pretende representar la totalidad de Wikipedia, sino permitir un análisis estructural acotado y verificable dentro de los objetivos del laboratorio.
@@ -155,30 +155,17 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 ---
 ## Descarga de datasets
 
-El proyecto utiliza archivos del dataset **Graphs SNAP Wiki**, específicamente los asociados a `wiki-topcats`.
+Los archivos `.mtx` del dataset no se incluyen directamente en el repositorio debido a su tamaño.
 
-Los archivos de mayor tamaño no se incluyen directamente en el repositorio debido a su peso, por lo que deben descargarse desde Kaggle:
+Para ejecutar correctamente el proyecto, descargar desde:
 
-<https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki>
+https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki
 
-Para ejecutar correctamente el proyecto, la carpeta `datos/` debe contener los siguientes archivos:
+Luego ubicar en la carpeta `datos/` los siguientes archivos:
 
-```text
-wiki-topcats.mtx
-wiki-topcats_Categories.mtx
-wiki-topcats_pagenames.txt
-wiki-topcats_Category_names.txt
-```
+- `wiki-topcats.mtx`
+- `wiki-topcats_Categories.mtx`
 
-| Archivo | Descripción |
-|---|---|
-| `wiki-topcats.mtx` | Contiene las relaciones de enlace entre artículos de Wikipedia. Cada par de identificadores representa una arista dirigida desde un artículo de origen hacia un artículo de destino. Este archivo se utiliza para construir la lista de adyacencia del grafo. |
-| `wiki-topcats_Categories.mtx` | Contiene las relaciones entre artículos y categorías. Cada par de identificadores permite asociar un artículo con una categoría determinada. |
-| `wiki-topcats_pagenames.txt` | Contiene los nombres asociados a los identificadores numéricos de cada artículo. Permite reemplazar los IDs por nombres comprensibles en los resultados. |
-| `wiki-topcats_Category_names.txt` | Contiene los nombres asociados a los identificadores de cada categoría. Permite interpretar las asociaciones artículo-categoría de forma clara. |
-
-> [!IMPORTANT]
-> Si alguno de estos archivos no se encuentra en la carpeta `datos/`, el programa puede fallar durante la carga de datos.
 ---
 
 ## Instalación y ejecución
