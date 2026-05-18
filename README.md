@@ -240,19 +240,60 @@ python main.py
 
 ### Verificación de ejecución
 
-Si el programa se ejecuta correctamente, la consola mostrará una salida similar a:
+Si la ejecución es correcta, la consola debe mostrar una validación inicial de carga similar a la siguiente:
 
 ```text
-BFS: [...]
-DFS: [...]
-Camino encontrado: [...]
+VALIDACION DE CARGA
+
+Cantidad de articulos cargados: ...
+Cantidad de categorias cargadas: ...
+Cantidad de enlaces procesados: 10000
+Cantidad de relaciones articulo-categoria: 10000
+```
+
+Luego, el programa muestra resultados asociados a recorridos, caminos, métricas estructurales, PageRank y relación artículo-categoría:
+
+```text
+Primeros 10 nodos visitados mediante BFS desde ...
+Primeros 10 nodos visitados mediante DFS desde ...
+
+Prueba/Resultado:
+Nodo origen -> ...
+Nodo destino -> ...
+¿Existe camino? -> Sí/No
+Camino encontrado -> [...]
+
 Articulos con mayor grado de entrada:
 ...
+
 Top PageRank:
+...
+
+Relación entre artículos destacados y categorías:
+...
+
+Top articulos con mayor grado de salida:
+...
+
+Comparacion PageRank vs grado de entrada:
+...
+
+Prueba de camino mas extensa:
 ...
 ```
 
-Además, se generarán automáticamente los archivos de resultados en la carpeta `resultados/`.
+Además, se generan automáticamente archivos de salida en la carpeta `resultados/`:
+
+```text
+ranking_pagerank.txt
+top_grado_entrada.png
+top_grado_salida.png
+top_pagerank.png
+histograma_grados.png
+distribucion_grados.png
+```
+
+Esta verificación permite comprobar que el sistema carga correctamente el subconjunto de datos, construye el grafo dirigido, ejecuta recorridos BFS/DFS, calcula métricas estructurales, aplica PageRank simplificado y exporta resultados interpretables.
 
 ---
 
@@ -429,6 +470,20 @@ Esta métrica permite identificar artículos que reciben muchas referencias desd
 
 ---
 
+## Complejidad computacional básica
+
+| Operación | Complejidad aproximada | Justificación |
+|---|---:|---|
+| BFS | `O(V + E)` | Recorre los nodos alcanzables y sus enlaces asociados. |
+| DFS | `O(V + E)` | Explora nodos y aristas siguiendo caminos en profundidad. |
+| Grado de salida | `O(1)` a `O(k)` | Depende del acceso a la lista de enlaces salientes del artículo. |
+| Grado de entrada | `O(1)` | Se obtiene desde la lista de enlaces entrantes almacenada en el artículo. |
+| PageRank simplificado | `O(i · V²)` en esta implementación | Para cada iteración se revisan los artículos y sus posibles enlaces entrantes. |
+
+Donde `V` representa la cantidad de artículos, `E` la cantidad de enlaces e `i` el número de iteraciones.
+
+---
+
 ###  Grado de salida
 
 El grado de salida corresponde a la cantidad de artículos hacia los cuales apunta un artículo determinado.
@@ -517,19 +572,37 @@ El programa muestra:
 - Artículos con mayor grado de entrada.
 - Top de artículos según PageRank.
 
+---
+
+## Resultados destacados
+
+A partir del subconjunto procesado, el sistema permitió identificar patrones de conectividad y relevancia estructural dentro de la red.
+
+| Análisis | Resultado destacado |
+|---|---|
+| PageRank | Artículos como `Buprestidae` y `Buprestoidea` obtuvieron valores altos de relevancia estructural. |
+| Distribución de grados | La red presenta una distribución desigual: pocos artículos concentran mayor cantidad de enlaces, mientras que muchos poseen baja conectividad. |
+| Métricas estructurales | El grado de entrada permite identificar artículos altamente referenciados dentro del subconjunto. |
+| Categorías | Las categorías permiten contextualizar temáticamente los artículos destacados por PageRank. |
+
+Estos resultados muestran que la importancia de un artículo no depende únicamente de cuántos enlaces recibe, sino también de la posición estructural de los artículos que lo referencian.
+
+---
+
 ### Archivos generados
 
 | Archivo | Descripción |
 |---|---|
-| `ranking_pagerank.txt` | Ranking textual de los artículos con mayor PageRank. |
+| `ranking_pagerank.txt` | Ranking de artículos con mayor PageRank. Incluye valor de PageRank y categorías asociadas cuando existen. |
 | `top_grado_entrada.png` | Gráfico de los artículos con mayor cantidad de enlaces entrantes. |
+| `top_grado_salida.png` | Gráfico de los artículos con mayor cantidad de enlaces salientes. |
 | `top_pagerank.png` | Gráfico de los artículos con mayor valor de PageRank. |
 | `histograma_grados.png` | Histograma de distribución de grados de entrada en el subconjunto analizado. |
-| `ranking_pagerank_categorias.txt` | Ranking de artículos según PageRank incluyendo sus categorías asociadas para apoyar la interpretación temática. |
-
+| `distribucion_grados.png` | Gráfico por rangos de cantidad de enlaces entrantes. |
 ---
 
 ## Interpretación de resultados
+
 Los resultados generados permiten analizar la relevancia estructural de los artículos desde distintas perspectivas.
 
 | Resultado | Interpretación |
@@ -559,33 +632,34 @@ Este análisis permite responder preguntas como:
 
 De esta forma, el sistema no solo entrega rankings numéricos, sino que también permite interpretar la organización temática de la red.
 
+En la implementación, cada artículo almacena sus categorías asociadas y cada categoría mantiene una lista de artículos vinculados. Esto permite que, después de calcular el ranking PageRank, los artículos mejor posicionados puedan ser interpretados temáticamente a partir de sus categorías. Por tanto, la relación PageRank-categorías no se limita a una explicación conceptual, sino que está respaldada por la estructura de datos del sistema.
+
 ---
 
 ## Cumplimiento de requerimientos del laboratorio
-| Requerimiento del laboratorio | Evidencia en el proyecto |
-|---|---|
-| Uso de Python | Todo el sistema está implementado en Python. |
-| Programación orientada a objetos | Se utilizan las clases `Articulo`, `Categoria` y `GrafoArticuloCategoria`. |
-| No uso de librerías de grafos | La representación del grafo se implementa manualmente mediante diccionarios y listas de adyacencia. |
-| Carga de datos reales | Se leen archivos `.mtx` y `.txt` del dataset `wiki-topcats`. |
-| Generación de subconjunto | Se cargan 10.000 enlaces y 10.000 relaciones artículo-categoría. |
-| Representación del grafo | Se usa una lista de adyacencia para representar enlaces dirigidos entre artículos. |
-| Métricas básicas | Se calcula grado de entrada, grado de salida y ranking por grado de entrada. |
-| Recorridos | Se implementan BFS y DFS. |
-| Caminos simples | Se implementa búsqueda de camino entre dos artículos. |
-| PageRank simplificado | Se calcula PageRank con 20 iteraciones y factor de amortiguación 0.85. |
-| Resultados | Se generan archivos `.txt` y gráficos `.png` en la carpeta `resultados/`. |
-| Documentación | El README describe estructura, clases, algoritmos, datos y ejecución. |
 
+| Criterio de evaluación | Evidencia en el proyecto |
+|---|---|
+| Carga y comprensión de datos | Se leen archivos `.mtx` y `.txt` del dataset `wiki-topcats`, considerando enlaces, nombres de artículos, categorías y relaciones artículo-categoría. |
+| Modelado orientado a objetos | Se implementan las clases `Articulo`, `Categoria`, `GrafoArticuloCategoria` y `LectorArch`, separando responsabilidades del dominio. |
+| Representación del grafo | El grafo dirigido se representa mediante una lista de adyacencia implementada con diccionarios de Python. |
+| Métricas básicas | Se calcula grado de entrada, grado de salida, ranking por grado de entrada e histograma de distribución de grados. |
+| Recorridos del grafo | Se implementan BFS y DFS para explorar conectividad entre artículos. |
+| Caminos simples | Se implementa el método `existe_camino(origen, destino)` para verificar rutas dirigidas entre artículos. |
+| PageRank simplificado | Se calcula PageRank con 20 iteraciones y factor de amortiguación 0.85. |
+| Análisis de resultados | Se interpretan métricas, ranking PageRank y relación con categorías para estudiar relevancia estructural. |
+| Despliegue y ejecución | El README documenta instalación, dependencias, ejecución en Linux/macOS y Windows PowerShell. |
+| Entregables | El repositorio incluye código, README, diagrama de clases, informe y resultados generados. |
 ---
 
 ## Limitaciones del proyecto
 
-- El análisis se realiza sobre un subconjunto del dataset original, por lo que los resultados no representan la totalidad de Wikipedia.
-- El PageRank implementado corresponde a una versión simplificada, adecuada para el objetivo académico del laboratorio.
+- El análisis se realiza sobre un subconjunto de 10.000 enlaces y 10.000 relaciones artículo-categoría, por lo que los resultados no representan la totalidad de Wikipedia.
 - Los rankings dependen directamente del subconjunto cargado y del orden de lectura de los archivos.
-- La asociación con categorías se utiliza como apoyo interpretativo, no como una segunda red principal de enlaces.
-
+- El PageRank implementado corresponde a una versión simplificada con número fijo de iteraciones.
+- La implementación actual no incorpora un criterio automático de convergencia para PageRank.
+- Los nodos sin enlaces salientes pueden afectar la redistribución de importancia dentro del algoritmo.
+- La asociación con categorías se utiliza como apoyo interpretativo y depende de las relaciones artículo-categoría cargadas en el subconjunto.
 ---
 
 ## Entregables incluidos
@@ -598,3 +672,10 @@ De esta forma, el sistema no solo entrega rankings numéricos, sino que también
 | Informe de resultados y conclusiones | `documentacion/` |
 | Resultados generados | `resultados/` |
 
+---
+
+## Conclusión
+
+El proyecto permite modelar un subconjunto de Wikipedia como un grafo dirigido y analizar su estructura mediante métricas básicas, recorridos BFS/DFS, búsqueda de caminos y PageRank simplificado. La implementación orientada a objetos permite separar responsabilidades entre artículos, categorías, lectura de datos y análisis del grafo.
+
+Los resultados obtenidos permiten identificar artículos estructuralmente relevantes, observar patrones de conectividad y contextualizar algunos nodos destacados mediante sus categorías asociadas. De esta forma, el sistema cumple con los objetivos principales del laboratorio y entrega una base funcional para extender el análisis hacia subconjuntos más grandes o nuevas métricas de grafos.
