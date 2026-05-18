@@ -59,6 +59,8 @@ El desarrollo se implementa en **Python**, sin utilizar librerías especializada
 
 Desarrollar un sistema en Python, basado en programación orientada a objetos, que permita representar, construir y analizar una red dirigida de artículos de Wikipedia.
 
+---
+
 ### Objetivos específicos
 
 - Representar artículos, categorías y relaciones mediante clases.
@@ -72,6 +74,7 @@ Desarrollar un sistema en Python, basado en programación orientada a objetos, q
 - Generar resultados claros por consola o mediante archivos de salida.
 
 ---
+
 ## Dataset utilizado
 
 El proyecto utiliza el dataset público:
@@ -102,12 +105,17 @@ Debido al tamaño del dataset original, se trabaja con un subconjunto de 10.000 
 
 El subconjunto no pretende representar la totalidad de Wikipedia, sino permitir un análisis estructural acotado y verificable dentro de los objetivos del laboratorio.
 
+---
+
 ## Estructura del proyecto
 
 El proyecto se organiza separando los archivos de datos, la documentación académica, las clases del dominio, los métodos de lectura, la ejecución principal y los resultados generados. Esta separación permite mantener una estructura modular y facilita la revisión del código.
 
 ```text
 .
+├── README.md
+├── .gitignore
+│
 ├── datos/
 │   ├── README.txt
 │   ├── wiki-topcats.mtx
@@ -118,7 +126,6 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 ├── documentacion/
 │   ├── Diagrama_Clase_Taller1.pdf
 │   ├── Taller_1_PC_S1_2026.pdf
-│   ├── README.md
 │   └── Informe_Taller1.pdf
 │
 ├── codigo/
@@ -130,15 +137,13 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 │       ├── lector_datosmtx.py
 │       └── main.py
 │
-│
-├── resultados/
-│   ├── ranking_pagerank.txt
-│   ├── top_grado_entrada.png
-│   ├── top_pagerank.png
-│   └── histograma_grados.png
-│
-└── .gitignore
-
+└── resultados/
+    ├── ranking_pagerank.txt
+    ├── top_grado_entrada.png
+    ├── top_grado_salida.png
+    ├── top_pagerank.png
+    ├── distribucion_grados.png
+    └── histograma_grados.png
 ```
 
 ---
@@ -154,15 +159,16 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 | `resultados/` | Contiene los rankings y gráficos generados automáticamente por el sistema. |
 
 ---
+
 ## Descarga de datasets
 
-Los archivos `.mtx` del dataset no se incluyen directamente en el repositorio debido a su tamaño.
+Algunos archivos del dataset pueden no incluirse directamente en el repositorio debido a su tamaño. Estos deben descargarse desde Kaggle y ubicarse en la carpeta `datos/`.
 
 Descargar desde:
 
-https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki
+<https://www.kaggle.com/datasets/wolfram77/graphs-snap-wiki>
 
-Para ejecutar correctamente el proyecto, la carpeta `datos/` debe contener los siguientes archivos:
+La carpeta `datos/` debe contener los siguientes archivos:
 
 ```text
 wiki-topcats.mtx
@@ -180,6 +186,7 @@ wiki-topcats_Category_names.txt
 
 > [!IMPORTANT]
 > Si alguno de estos cuatro archivos no está presente en `datos/`, el programa puede fallar durante la carga de datos.
+
 ---
 
 ## Instalación y ejecución
@@ -201,17 +208,19 @@ wiki-topcats_Category_names.txt
 | Matplotlib | Librería utilizada para generar gráficos de resultados. |
 | Dataset | Archivos `wiki-topcats.mtx`, `wiki-topcats_Categories.mtx`, `wiki-topcats_pagenames.txt` y `wiki-topcats_Category_names.txt` ubicados en `datos/`. |
 
+---
+
 ### Instalación de dependencias
 
 Ejecutar el siguiente comando en la terminal:
 
 ```bash
-pip install matplotlib
+python -m pip install matplotlib
 ```
 
+---
+
 ### Ejecución del programa
-
-
 
 Debido a la estructura modular del proyecto, se recomienda ejecutar el programa desde la carpeta `codigo/dominio/`.
 
@@ -235,6 +244,19 @@ python main.py
 
 > [!NOTE]
 > Al ejecutar el programa, se construye el grafo dirigido, se calculan métricas estructurales, se aplican recorridos BFS/DFS, se estima PageRank simplificado y se generan archivos de salida en la carpeta `resultados/`.
+
+---
+
+### Ejecución en Linux sin interfaz gráfica
+
+En caso de ejecutar el proyecto en un entorno Linux sin interfaz gráfica, se puede usar:
+
+```bash
+cd codigo/dominio
+MPLBACKEND=Agg PYTHONPATH=.. python3 main.py
+```
+
+Este comando permite generar los gráficos sin depender de una ventana visual.
 
 ---
 
@@ -297,6 +319,35 @@ Esta verificación permite comprobar que el sistema carga correctamente el subco
 
 ---
 
+### Verificación de archivos generados
+
+Después de ejecutar el programa, puede verificarse la creación de resultados con los siguientes comandos.
+
+En Linux o macOS:
+
+```bash
+ls ../../resultados
+```
+
+En Windows PowerShell:
+
+```powershell
+Get-ChildItem ..\..\resultados
+```
+
+La carpeta debe contener:
+
+```text
+ranking_pagerank.txt
+top_grado_entrada.png
+top_grado_salida.png
+top_pagerank.png
+histograma_grados.png
+distribucion_grados.png
+```
+
+---
+
 ## Funcionalidades principales
 
 | Funcionalidad | Estado |
@@ -316,6 +367,8 @@ Esta verificación permite comprobar que el sistema carga correctamente el subco
 | Verificación de camino entre artículos | Implementado |
 | PageRank simplificado | Implementado |
 | Exportación de ranking a `.txt` | Implementado |
+| Relación PageRank-categorías | Implementado |
+| Exportación de gráficos `.png` | Implementado |
 
 ---
 
@@ -329,10 +382,12 @@ Esta verificación permite comprobar que el sistema carga correctamente el subco
 | Subconjunto de 10.000 enlaces y 10.000 relaciones artículo-categoría | Permite trabajar con datos reales manteniendo tiempos de ejecución razonables y resultados reproducibles. |
 | No uso de `networkx` | Permite implementar manualmente la estructura del grafo y los algoritmos solicitados. |
 | Exportación de resultados | Facilita la revisión posterior mediante archivos `.txt` y gráficos `.png`. |
+
 ---
+
 ## Modelo orientado a objetos
 
-El sistema se organiza en tres clases principales: `Articulo`, `Categoria` y `GrafoArticuloCategoria`.
+El sistema se organiza mediante clases con responsabilidades diferenciadas: `Articulo` y `Categoria` representan entidades del dominio, `GrafoArticuloCategoria` concentra la estructura y operaciones del grafo, y `LectorArch` centraliza la lectura de archivos del dataset.
 
 ---
 
@@ -411,6 +466,21 @@ Métodos principales:
 
 ---
 
+### Clase `LectorArch`
+
+Centraliza la lectura de archivos del dataset.
+
+Métodos principales:
+
+| Método | Descripción |
+|---|---|
+| `leer_mtx_filtrado(ruta, limite)` | Lee enlaces dirigidos entre artículos desde un archivo `.mtx`. |
+| `leer_mtx_categorias(ruta, limite)` | Lee relaciones entre artículos y categorías desde un archivo `.mtx`. |
+| `leer_nombres_articulos(ruta)` | Lee nombres de artículos desde un archivo `.txt`. |
+| `leer_nombres_categorias(ruta)` | Lee nombres de categorías desde un archivo `.txt`. |
+
+---
+
 ## Representación del grafo
 
 El grafo se representa mediante una **lista de adyacencia** implementada con diccionarios de Python.
@@ -454,9 +524,9 @@ La lectura de archivos `.mtx` ignora líneas de comentario y líneas de metadato
 
 ---
 
-##  Algoritmos implementados
+## Algoritmos implementados
 
-###  Grado de entrada
+### Grado de entrada
 
 El grado de entrada de un artículo corresponde a la cantidad de artículos que apuntan hacia él.
 
@@ -470,21 +540,7 @@ Esta métrica permite identificar artículos que reciben muchas referencias desd
 
 ---
 
-## Complejidad computacional básica
-
-| Operación | Complejidad aproximada | Justificación |
-|---|---:|---|
-| BFS | `O(V + E)` | Recorre los nodos alcanzables y sus enlaces asociados. |
-| DFS | `O(V + E)` | Explora nodos y aristas siguiendo caminos en profundidad. |
-| Grado de salida | `O(1)` a `O(k)` | Depende del acceso a la lista de enlaces salientes del artículo. |
-| Grado de entrada | `O(1)` | Se obtiene desde la lista de enlaces entrantes almacenada en el artículo. |
-| PageRank simplificado | `O(i · V²)` en esta implementación | Para cada iteración se revisan los artículos y sus posibles enlaces entrantes. |
-
-Donde `V` representa la cantidad de artículos, `E` la cantidad de enlaces e `i` el número de iteraciones.
-
----
-
-###  Grado de salida
+### Grado de salida
 
 El grado de salida corresponde a la cantidad de artículos hacia los cuales apunta un artículo determinado.
 
@@ -495,6 +551,7 @@ grado_salida(articulo) = cantidad de enlaces que salen desde el artículo
 Esta métrica permite identificar artículos que referencian muchas otras páginas.
 
 ---
+
 ### BFS
 
 BFS, o búsqueda en anchura, recorre el grafo explorando primero los vecinos más cercanos al nodo inicial.
@@ -537,24 +594,47 @@ factor_amortiguacion = 0.85
 
 ---
 
+## Complejidad computacional básica
+
+| Operación | Complejidad aproximada | Justificación |
+|---|---:|---|
+| BFS | `O(V + E)` | Recorre los nodos alcanzables y sus enlaces asociados. |
+| DFS | `O(V + E)` | Explora nodos y aristas siguiendo caminos en profundidad. |
+| Búsqueda de camino | `O(V + E)` | Recorre nodos y enlaces alcanzables para determinar si existe una ruta dirigida entre dos artículos. |
+| Grado de salida | `O(1)` | Se obtiene desde la lista de enlaces salientes almacenada en el artículo. |
+| Grado de entrada | `O(1)` | Se obtiene desde la lista de enlaces entrantes almacenada en el artículo. |
+| PageRank simplificado | `O(i · V · E)` en esta implementación | Para cada iteración se evalúan posibles contribuciones entre artículos usando listas de enlaces salientes. |
+
+Donde `V` representa la cantidad de artículos, `E` la cantidad de enlaces e `i` el número de iteraciones.
+
+> [!NOTE]
+> Esta complejidad podría reducirse si se utilizaran directamente las listas de enlaces entrantes o estructuras tipo `set` para optimizar la búsqueda de pertenencia.
+
+---
+
 ## Flujo general del programa
 
-El archivo `main.py` realiza las siguientes operaciones:
+El archivo `main.py` coordina la ejecución completa del sistema mediante las siguientes etapas:
 
 1. Crea una instancia de `GrafoArticuloCategoria`.
-2. Lee enlaces desde `wiki-topcats.mtx`.
+2. Lee enlaces dirigidos entre artículos desde `wiki-topcats.mtx`.
 3. Lee relaciones artículo-categoría desde `wiki-topcats_Categories.mtx`.
 4. Lee nombres de artículos desde `wiki-topcats_pagenames.txt`.
 5. Lee nombres de categorías desde `wiki-topcats_Category_names.txt`.
 6. Construye objetos de tipo `Articulo`.
 7. Construye objetos de tipo `Categoria`.
 8. Agrega enlaces dirigidos al grafo.
-9. Asocia artículos con categorías.
-10. Ejecuta BFS y DFS desde un artículo inicial.
-11. Verifica si existe camino entre dos artículos.
-12. Calcula artículos con mayor grado de entrada.
-13. Calcula PageRank.
-14. Exporta el ranking principal al archivo `ranking_pagerank.txt`.
+9. Asocia artículos con sus respectivas categorías.
+10. Muestra una validación inicial de carga.
+11. Ejecuta recorridos BFS y DFS desde un nodo inicial.
+12. Verifica la existencia de caminos simples entre artículos.
+13. Calcula artículos con mayor grado de entrada.
+14. Calcula artículos con mayor grado de salida.
+15. Calcula PageRank simplificado.
+16. Relaciona los artículos con mayor PageRank con sus categorías.
+17. Compara PageRank con grado de entrada.
+18. Genera gráficos de grado de entrada, grado de salida, PageRank y distribución de grados.
+19. Exporta el ranking PageRank con categorías asociadas al archivo `ranking_pagerank.txt`.
 
 ---
 
@@ -562,30 +642,21 @@ El archivo `main.py` realiza las siguientes operaciones:
 
 Al ejecutar `main.py`, el sistema genera resultados por consola y archivos en la carpeta `resultados/`.
 
+---
+
 ### Salida por consola
 
 El programa muestra:
 
+- Validación de carga del subconjunto.
 - Primeros nodos visitados mediante BFS.
 - Primeros nodos visitados mediante DFS.
-- Camino simple encontrado entre dos artículos, si existe.
+- Verificación de existencia de camino entre artículos.
 - Artículos con mayor grado de entrada.
+- Artículos con mayor grado de salida.
 - Top de artículos según PageRank.
-
----
-
-## Resultados destacados
-
-A partir del subconjunto procesado, el sistema permitió identificar patrones de conectividad y relevancia estructural dentro de la red.
-
-| Análisis | Resultado destacado |
-|---|---|
-| PageRank | Artículos como `Buprestidae` y `Buprestoidea` obtuvieron valores altos de relevancia estructural. |
-| Distribución de grados | La red presenta una distribución desigual: pocos artículos concentran mayor cantidad de enlaces, mientras que muchos poseen baja conectividad. |
-| Métricas estructurales | El grado de entrada permite identificar artículos altamente referenciados dentro del subconjunto. |
-| Categorías | Las categorías permiten contextualizar temáticamente los artículos destacados por PageRank. |
-
-Estos resultados muestran que la importancia de un artículo no depende únicamente de cuántos enlaces recibe, sino también de la posición estructural de los artículos que lo referencian.
+- Relación entre artículos destacados y categorías.
+- Comparación entre PageRank y grado de entrada.
 
 ---
 
@@ -598,7 +669,51 @@ Estos resultados muestran que la importancia de un artículo no depende únicame
 | `top_grado_salida.png` | Gráfico de los artículos con mayor cantidad de enlaces salientes. |
 | `top_pagerank.png` | Gráfico de los artículos con mayor valor de PageRank. |
 | `histograma_grados.png` | Histograma de distribución de grados de entrada en el subconjunto analizado. |
-| `distribucion_grados.png` | Gráfico por rangos de cantidad de enlaces entrantes. |
+| `distribucion_grados.png` | Gráfico de distribución de artículos según rangos de grado de entrada. |
+
+---
+
+## Resultados destacados
+
+A partir del subconjunto procesado, el sistema permitió identificar artículos estructuralmente relevantes dentro de la red dirigida. La interpretación no se basa únicamente en la cantidad de enlaces entrantes, sino también en la posición de cada artículo dentro del grafo y en la relevancia de los nodos que lo referencian.
+
+| Análisis | Resultado interpretado |
+|---|---|
+| PageRank | Los artículos con mayor PageRank representan nodos relevantes dentro del subconjunto, ya que reciben enlaces desde artículos que también poseen importancia estructural. |
+| Grado de entrada | Los artículos con alto grado de entrada corresponden a nodos altamente referenciados dentro de la red cargada. |
+| Grado de salida | Los artículos con alto grado de salida actúan como nodos que referencian múltiples páginas, pudiendo funcionar como conectores hacia otros temas. |
+| Distribución de grados | La red presenta una distribución desigual: pocos artículos concentran una mayor cantidad de enlaces, mientras que muchos poseen baja conectividad. |
+| Categorías | Las categorías permiten contextualizar temáticamente los artículos destacados por PageRank y observar posibles concentraciones temáticas. |
+
+---
+
+### Top PageRank obtenido
+
+| Posición | Artículo | Valor PageRank | Categorías asociadas |
+|---:|---|---:|---|
+| 1 | `Buprestidae` | `0.0093829558` | `Buprestoidea` |
+| 2 | `Buprestoidea` | `0.0073794644` | `Buprestoidea` |
+| 3 | `Visual kei` | `0.0042655368` | `Visual_kei_bands` |
+| 4 | `Schizopodidae` | `0.0040390041` | `Buprestoidea` |
+| 5 | `Satanic ritual abuse` | `0.0030912983` | Sin categorías registradas |
+| 6 | `X Japan` | `0.0030681726` | `Visual_kei_bands`, `Japanese_rock_music_groups` |
+| 7 | `Laboulbeniomycetes` | `0.0023828623` | Sin categorías registradas |
+| 8 | `Laboulbeniales` | `0.0021516020` | `Laboulbeniomycetes` |
+| 9 | `Moral panic` | `0.0018760295` | Sin categorías registradas |
+| 10 | `McMartin preschool trial` | `0.0015757992` | Sin categorías registradas |
+
+---
+
+### Interpretación del Top PageRank
+
+El ranking muestra que los artículos con mayor PageRank no se distribuyen aleatoriamente, sino que aparecen concentraciones temáticas dentro del subconjunto analizado. En particular, varios artículos destacados pertenecen a la categoría `Buprestoidea`, como `Buprestidae`, `Buprestoidea` y `Schizopodidae`. Esto sugiere que, dentro del subconjunto cargado, existe una zona de la red asociada a esta categoría con alta relevancia estructural.
+
+También se observa una concentración temática asociada a la categoría `Visual_kei_bands`, representada por artículos como `Visual kei` y `X Japan`. En este caso, PageRank permite identificar artículos relevantes dentro de una comunidad temática vinculada a música japonesa.
+
+Por otro lado, artículos como `Satanic ritual abuse`, `Moral panic` y `McMartin preschool trial` aparecen en el ranking sin categorías registradas en el subconjunto cargado. Esto no implica necesariamente que dichos artículos no tengan categorías en Wikipedia, sino que sus categorías no aparecen dentro de las relaciones artículo-categoría procesadas en el subconjunto utilizado.
+
+En conjunto, estos resultados evidencian que PageRank permite detectar artículos estructuralmente relevantes y que la asociación con categorías aporta una interpretación temática adicional. Por ello, el análisis no se limita a ordenar artículos por valor numérico, sino que permite observar patrones de organización dentro de la red.
+
 ---
 
 ## Interpretación de resultados
@@ -636,20 +751,19 @@ En la implementación, cada artículo almacena sus categorías asociadas y cada 
 
 ---
 
-## Cumplimiento de requerimientos del laboratorio
+## Cumplimiento de la rúbrica
 
-| Criterio de evaluación | Evidencia en el proyecto |
-|---|---|
-| Carga y comprensión de datos | Se leen archivos `.mtx` y `.txt` del dataset `wiki-topcats`, considerando enlaces, nombres de artículos, categorías y relaciones artículo-categoría. |
-| Modelado orientado a objetos | Se implementan las clases `Articulo`, `Categoria`, `GrafoArticuloCategoria` y `LectorArch`, separando responsabilidades del dominio. |
-| Representación del grafo | El grafo dirigido se representa mediante una lista de adyacencia implementada con diccionarios de Python. |
-| Métricas básicas | Se calcula grado de entrada, grado de salida, ranking por grado de entrada e histograma de distribución de grados. |
-| Recorridos del grafo | Se implementan BFS y DFS para explorar conectividad entre artículos. |
-| Caminos simples | Se implementa el método `existe_camino(origen, destino)` para verificar rutas dirigidas entre artículos. |
-| PageRank simplificado | Se calcula PageRank con 20 iteraciones y factor de amortiguación 0.85. |
-| Análisis de resultados | Se interpretan métricas, ranking PageRank y relación con categorías para estudiar relevancia estructural. |
-| Despliegue y ejecución | El README documenta instalación, dependencias, ejecución en Linux/macOS y Windows PowerShell. |
-| Entregables | El repositorio incluye código, README, diagrama de clases, informe y resultados generados. |
+| Criterio de evaluación | Puntaje | Evidencia en el proyecto |
+|---|---:|---|
+| Carga y manejo de datos | 10 pts | Se leen archivos `.mtx` y `.txt` del dataset `wiki-topcats`, considerando enlaces, nombres de artículos, nombres de categorías y relaciones artículo-categoría. Además, se trabaja con subconjuntos funcionales de 10.000 enlaces y 10.000 relaciones. |
+| Modelado orientado a objetos | 20 pts | Se implementan las clases `Articulo`, `Categoria`, `GrafoArticuloCategoria` y `LectorArch`, separando entidades del dominio, lectura de datos y operaciones del grafo. |
+| Representación del grafo | 15 pts | El grafo dirigido se representa mediante una lista de adyacencia implementada con diccionarios, permitiendo consultar enlaces salientes, enlaces entrantes y asociaciones con categorías. |
+| Métricas básicas | 10 pts | Se calcula grado de entrada, grado de salida, ranking por grado de entrada y distribución de grados. |
+| Recorridos BFS/DFS | 10 pts | Se implementan recorridos en anchura y profundidad para explorar conectividad dentro del grafo dirigido. |
+| PageRank simplificado | 15 pts | Se implementa PageRank con 20 iteraciones y factor de amortiguación 0.85, generando un ranking de artículos relevantes. |
+| Análisis e interpretación de resultados | 25 pts | Se interpretan métricas estructurales, rankings PageRank, distribución de grados y relación entre artículos destacados y categorías. |
+| Presentación general y ejecución | 5 pts | El README documenta instalación, estructura del proyecto, ejecución en Linux/macOS y Windows PowerShell, verificación de salida y archivos generados. |
+
 ---
 
 ## Limitaciones del proyecto
@@ -660,6 +774,17 @@ En la implementación, cada artículo almacena sus categorías asociadas y cada 
 - La implementación actual no incorpora un criterio automático de convergencia para PageRank.
 - Los nodos sin enlaces salientes pueden afectar la redistribución de importancia dentro del algoritmo.
 - La asociación con categorías se utiliza como apoyo interpretativo y depende de las relaciones artículo-categoría cargadas en el subconjunto.
+
+---
+
+## Mejoras futuras
+
+- Optimizar PageRank usando listas de enlaces entrantes o estructuras tipo `set`.
+- Incorporar un criterio automático de convergencia para detener las iteraciones de PageRank.
+- Procesar subconjuntos de mayor tamaño para obtener resultados más representativos.
+- Exportar tablas adicionales en formato `.csv` para facilitar análisis posterior.
+- Incorporar visualizaciones comparativas entre grado de entrada, grado de salida y PageRank.
+
 ---
 
 ## Entregables incluidos
@@ -669,7 +794,7 @@ En la implementación, cada artículo almacena sus categorías asociadas y cada 
 | Código fuente | `codigo/dominio/` |
 | README pertinente | `README.md` |
 | Diagrama de clases | `documentacion/Diagrama_Clase_Taller1.pdf` |
-| Informe de resultados y conclusiones | `documentacion/` |
+| Informe de resultados y conclusiones | `documentacion/Informe_Taller1.pdf` |
 | Resultados generados | `resultados/` |
 
 ---
