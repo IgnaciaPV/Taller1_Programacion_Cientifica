@@ -777,16 +777,6 @@ En la implementación, cada artículo almacena sus categorías asociadas y cada 
 
 ---
 
-## Mejoras futuras
-
-- Optimizar PageRank usando listas de enlaces entrantes o estructuras tipo `set`.
-- Incorporar un criterio automático de convergencia para detener las iteraciones de PageRank.
-- Procesar subconjuntos de mayor tamaño para obtener resultados más representativos.
-- Exportar tablas adicionales en formato `.csv` para facilitar análisis posterior.
-- Incorporar visualizaciones comparativas entre grado de entrada, grado de salida y PageRank.
-
----
-
 ## Entregables incluidos
 
 | Entregable solicitado | Ubicación en el repositorio |
