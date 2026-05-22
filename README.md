@@ -129,13 +129,16 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 │   └── Informe_Taller1.pdf
 │
 ├── codigo/
-│   └── dominio/
-│       ├── articulos.py
-│       ├── categoria.py
-│       ├── grafoarticulocategoria.py
-│       ├── lector_datos.py
-│       ├── lector_datosmtx.py
-│       └── main.py
+│   ├── dominio/
+│   │   ├── articulos.py
+│   │   └── categoria.py
+│   ├── grafo/
+│   │   └── grafoarticulocategoria.py
+│   ├── lector/
+│   │   └── lector_datos.py
+│   ├── legacy/
+│   │    └── lector_datosmtx.py
+│   └── main.py
 │
 └── resultados/
     ├── ranking_pagerank.txt
@@ -154,8 +157,8 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 |---|---|
 | `datos/` | Contiene los archivos requeridos del dataset `wiki-topcats` o las instrucciones para descargarlos desde Kaggle. |
 | `documentacion/` | Contiene el enunciado del taller, el informe de resultados y el diagrama de clases. |
-| `codigo/dominio/` | Contiene las clases del dominio, la lectura de datos, la estructura del grafo y la ejecución principal. |
-| `codigo/dominio/main.py` | Coordina la carga de datos, construcción del grafo, ejecución de algoritmos y generación de resultados. |
+| `codigo/` | Contiene el ejecutable principal y los módulos del proyecto para dominio, grafo y lectura de datos. |
+| `codigo/main.py` | Coordinador principal que carga datos, construye el grafo, ejecuta los algoritmos y genera resultados. |
 | `resultados/` | Contiene los rankings y gráficos generados automáticamente por el sistema. |
 
 ---
@@ -222,25 +225,24 @@ python -m pip install matplotlib
 
 ### Ejecución del programa
 
-Debido a la estructura modular del proyecto, se recomienda ejecutar el programa desde la carpeta `codigo/dominio/`.
+Debido a la estructura modular del proyecto, se recomienda ejecutar el programa desde la carpeta `codigo/`.
 
 En Linux o macOS:
 
 ```bash
-cd codigo/dominio
-PYTHONPATH=.. python3 main.py
+cd codigo
+python3 main.py
 ```
 
 En Windows PowerShell:
 
 ```powershell
-cd codigo/dominio
-$env:PYTHONPATH=".."
+cd codigo
 python main.py
 ```
 
 > [!NOTE]
-> Esta forma de ejecución permite que Python encuentre correctamente el paquete `dominio` y que las rutas relativas hacia `../../datos/` y `../../resultados/` funcionen de forma adecuada.
+> Esta forma de ejecución permite que Python encuentre correctamente los paquetes internos `dominio`, `grafo` y `lector`, y que las rutas relativas hacia `../datos/` y `../resultados/` funcionen de forma adecuada.
 
 > [!NOTE]
 > Al ejecutar el programa, se construye el grafo dirigido, se calculan métricas estructurales, se aplican recorridos BFS/DFS, se estima PageRank simplificado y se generan archivos de salida en la carpeta `resultados/`.
@@ -252,8 +254,8 @@ python main.py
 En caso de ejecutar el proyecto en un entorno Linux sin interfaz gráfica, se puede usar:
 
 ```bash
-cd codigo/dominio
-MPLBACKEND=Agg PYTHONPATH=.. python3 main.py
+cd codigo
+MPLBACKEND=Agg python3 main.py
 ```
 
 Este comando permite generar los gráficos sin depender de una ventana visual.
@@ -642,8 +644,6 @@ El archivo `main.py` coordina la ejecución completa del sistema mediante las si
 
 Al ejecutar `main.py`, el sistema genera resultados por consola y archivos en la carpeta `resultados/`.
 
----
-
 ### Salida por consola
 
 El programa muestra:
@@ -781,7 +781,7 @@ En la implementación, cada artículo almacena sus categorías asociadas y cada 
 
 | Entregable solicitado | Ubicación en el repositorio |
 |---|---|
-| Código fuente | `codigo/dominio/` |
+| Código fuente | `codigo/` |
 | README pertinente | `README.md` |
 | Diagrama de clases | `documentacion/Diagrama_Clase_Taller1.pdf` |
 | Informe de resultados y conclusiones | `documentacion/Informe_Taller1.pdf` |

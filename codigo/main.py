@@ -3,21 +3,25 @@ import matplotlib.pyplot as plt
 
 from dominio.articulos import Articulo
 from dominio.categoria import Categoria
-from dominio.grafoarticulocategoria import GrafoArticuloCategoria
-from dominio.lector_datos import LectorArch
+from grafo.grafoarticulocategoria import GrafoArticuloCategoria
+from lector.lector_datos import LectorArch
 
 
 def main():
+    
+    #Print de bienvenida
+    print("Bienvenido al programa de análisis de artículos y categorías de Wikipedia.\n")
+    
     # Crear carpeta resultados automáticamente si no existe
-    carpeta_resultados = "../../resultados"
+    carpeta_resultados = "../resultados"
     os.makedirs(carpeta_resultados, exist_ok=True)
     grafo = GrafoArticuloCategoria()
-    enlaces = LectorArch.leer_mtx_filtrado("../../datos/wiki-topcats.mtx",limite=10000)
-    relaciones = LectorArch.leer_mtx_categorias( "../../datos/wiki-topcats_Categories.mtx",limite=10000)
+    enlaces = LectorArch.leer_mtx_filtrado("../datos/wiki-topcats.mtx",limite=10000)
+    relaciones = LectorArch.leer_mtx_categorias( "../datos/wiki-topcats_Categories.mtx",limite=10000)
 
-    nombres_articulos = LectorArch.leer_nombres_articulos("../../datos/wiki-topcats_pagenames.txt")
+    nombres_articulos = LectorArch.leer_nombres_articulos("../datos/wiki-topcats_pagenames.txt")
 
-    nombres_categorias = LectorArch.leer_nombres_categorias("../../datos/wiki-topcats_Category_names.txt")
+    nombres_categorias = LectorArch.leer_nombres_categorias("../datos/wiki-topcats_Category_names.txt")
 
     articulo_por_id = {
         i + 1: nombre
@@ -154,6 +158,9 @@ def main():
     for articulo, grado in top_articulos:
         nombre = grafo.articulos[articulo].nombre_articulo
         print(nombre, "-", grado)
+        
+    #Print de carga 
+    print("\nProcesando PageRank...")
 
     # PageRank
     ranks = grafo.pagerank()
@@ -422,7 +429,7 @@ def main():
         f"{carpeta_resultados}/distribucion_grados.png"
     )
 
-    plt.show()
+    plt.close()
 
     # ======================================
     # COMPARACION PAGERANK VS GRADO ENTRADA
@@ -523,3 +530,11 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    #Print de carga finalizada
+    
+    print("\nAnálisis completado. Resultados guardados en la carpeta 'resultados'.")
+    
+    #Print de despedida
+    
+    print("\nGracias por utilizar el programa. ¡Hasta luego!")
