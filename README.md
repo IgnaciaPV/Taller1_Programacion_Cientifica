@@ -28,8 +28,8 @@
     <td>Universidad Católica del Norte</td>
   </tr>
   <tr>
-    <td><b>Fecha</b></td>
-    <td>16/05/2026</td>
+    <td><b>Fecha de Entrega</b></td>
+    <td>27/05/2026</td>
   </tr>
 </table>
 
