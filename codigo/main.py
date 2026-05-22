@@ -80,11 +80,20 @@ def main():
     print(f"Cantidad de relaciones articulo-categoria: {cantidad_relaciones}")
 
     # BFS
-    inicio = list(grafo.articulos.keys())[100]
+    inicio = max(
+        grafo.articulos.keys(),
+        key=lambda id_articulo: grafo.grado_salida(id_articulo)
+    )
+    nombre_inicio = grafo.articulos[inicio].nombre_articulo
+    grado_salida_inicio = grafo.grado_salida(inicio)
+
+    print("\nNodo seleccionado automaticamente para BFS/DFS:")
+    print(f"Articulo: {nombre_inicio}")
+    print(f"ID: {inicio}")
+    print(f"Grado de salida: {grado_salida_inicio}")
+
     resultado_bfs = grafo.bfs(inicio)
     resultado_dfs = grafo.dfs(inicio)
-
-    nombre_inicio = grafo.articulos[inicio].nombre_articulo
 
     print(f"\nPrimeros 10 nodos visitados mediante BFS desde {nombre_inicio}:")
 
