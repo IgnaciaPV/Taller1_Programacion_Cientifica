@@ -235,7 +235,12 @@ def main():
 
     plt.figure(figsize=(12, 5))
 
-    plt.bar(nombres_top, grados_top)
+    plt.bar(
+        nombres_top,
+        grados_top,
+        edgecolor="black",
+        width=0.8,
+    )
 
     plt.title("Top articulos con mayor grado de entrada")
 
@@ -298,7 +303,9 @@ def main():
 
     plt.bar(
         nombres_salida,
-        valores_salida
+        valores_salida,
+        edgecolor="black",
+        width=0.8,
     )
 
     plt.title("Top articulos con mayor grado de salida")
@@ -335,7 +342,12 @@ def main():
 
     plt.figure(figsize=(12, 5))
 
-    plt.bar(nombres_pagerank, valores_pagerank)
+    plt.bar(
+        nombres_pagerank,
+        valores_pagerank,
+        edgecolor="black",
+        width=0.8
+    )
 
     plt.title("Top articulos segun PageRank")
 
@@ -388,7 +400,9 @@ def main():
     # ======================================
 
     rangos = {
-        "0-5": 0,
+        "0": 0,
+        "1-2": 0,
+        "3-5": 0,
         "6-10": 0,
         "11-20": 0,
         "21-50": 0,
@@ -397,8 +411,14 @@ def main():
 
     for grado in grados_totales:
 
-        if grado <= 5:
-            rangos["0-5"] += 1
+        if grado <= 0:
+            rangos["0"] += 1
+
+        elif grado <= 2:
+            rangos["1-2"] += 1
+
+        elif grado <= 5:
+            rangos["3-5"] += 1
 
         elif grado <= 10:
             rangos["6-10"] += 1
@@ -416,7 +436,9 @@ def main():
 
     plt.bar(
         rangos.keys(),
-        rangos.values()
+        rangos.values(),
+        edgecolor="black",
+        width=0.8,
     )
 
     plt.title("Distribucion de grados")
