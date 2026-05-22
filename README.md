@@ -118,9 +118,9 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 │
 ├── datos/
 │   ├── README.txt
-│   ├── wiki-topcats.mtx
-│   ├── wiki-topcats_Categories.mtx
-│   ├── wiki-topcats_pagenames.txt
+│   ├── wiki-topcats.mtx   # descargar desde Kaggle
+│   ├── wiki-topcats_Categories.mtx   # descargar desde Kaggle
+│   ├── wiki-topcats_pagenames.txt   
 │   └── wiki-topcats_Category_names.txt
 │
 ├── documentacion/
@@ -140,7 +140,7 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 │   │    └── lector_datosmtx.py
 │   └── main.py
 │
-└── resultados/
+└── resultados/   # se crea automáticamente al ejecutar
     ├── ranking_pagerank.txt
     ├── top_grado_entrada.png
     ├── top_grado_salida.png
@@ -364,6 +364,7 @@ distribucion_grados.png
 | Asociación artículo-categoría | Implementado |
 | Cálculo de grado de entrada | Implementado |
 | Cálculo de grado de salida | Implementado |
+| Selección automática del nodo inicial para BFS/DFS según mayor grado de salida | Implementado |
 | Recorrido BFS | Implementado |
 | Recorrido DFS | Implementado |
 | Verificación de camino entre artículos | Implementado |
