@@ -157,7 +157,11 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 |---|---|
 | `datos/` | Contiene los archivos requeridos del dataset `wiki-topcats` o las instrucciones para descargarlos desde Kaggle. |
 | `documentacion/` | Contiene el enunciado del taller, el informe de resultados y el diagrama de clases. |
-| `codigo/` | Contiene el ejecutable principal y los módulos del proyecto para dominio, grafo y lectura de datos. |
+| `codigo/` | Contiene el programa principal y los módulos del proyecto. |
+| `codigo/dominio/` | Contiene las clases que representan entidades del dominio: artículos y categorías. |
+| `codigo/grafo/` | Contiene la clase que administra el grafo dirigido y sus algoritmos. |
+| `codigo/lector/` | Contiene los métodos de lectura de archivos `.mtx` y `.txt`. |
+| `codigo/legacy/` | Contiene código anterior o auxiliar conservado como referencia histórica. |
 | `codigo/main.py` | Coordinador principal que carga datos, construye el grafo, ejecuta los algoritmos y genera resultados. |
 | `resultados/` | Contiene los rankings y gráficos generados automáticamente por el sistema. |
 
@@ -390,7 +394,14 @@ distribucion_grados.png
 
 ## Modelo orientado a objetos
 
-El sistema se organiza mediante clases con responsabilidades diferenciadas: `Articulo` y `Categoria` representan entidades del dominio, `GrafoArticuloCategoria` concentra la estructura y operaciones del grafo, y `LectorArch` centraliza la lectura de archivos del dataset.
+El sistema se organiza mediante clases con responsabilidades diferenciadas. Esta decisión permite mantener una arquitectura modular, separar la lectura de datos de la lógica del grafo y facilitar futuras extensiones del proyecto.
+
+| Clase | Responsabilidad principal |
+|---|---|
+| `Articulo` | Representa cada artículo de Wikipedia, almacenando ID, nombre, categorías asociadas, enlaces entrantes y enlaces salientes. |
+| `Categoria` | Representa una categoría del dataset y mantiene la lista de artículos asociados. |
+| `GrafoArticuloCategoria` | Administra artículos, categorías, lista de adyacencia, métricas, recorridos, caminos y PageRank. |
+| `LectorArch` | Centraliza la lectura de archivos `.mtx` y `.txt` del dataset. |
 
 ---
 
@@ -784,8 +795,10 @@ En la implementación, cada artículo almacena sus categorías asociadas y cada 
 |---|---|
 | Código fuente | `codigo/` |
 | README pertinente | `README.md` |
+| Dataset o instrucciones de descarga | `datos/` |
 | Diagrama de clases | `documentacion/Diagrama_Clase_Taller1.pdf` |
 | Informe de resultados y conclusiones | `documentacion/Informe_Taller1.pdf` |
+| Enunciado del taller | `documentacion/Taller_1_PC_S1_2026.pdf` |
 | Resultados generados | `resultados/` |
 
 ---
