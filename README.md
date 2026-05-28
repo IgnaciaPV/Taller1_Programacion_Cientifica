@@ -124,7 +124,7 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 │   └── wiki-topcats_Category_names.txt
 │
 ├── documentacion/
-│   ├── Diagrama_Clase_Taller1.pdf
+│   ├── Diagrama_Clase_Taller1.png
 │   ├── Taller_1_PC_S1_2026.pdf
 │   └── Informe_Taller1.pdf
 │
@@ -161,7 +161,7 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 | `codigo/dominio/` | Contiene las clases que representan entidades del dominio: artículos y categorías. |
 | `codigo/grafo/` | Contiene la clase que administra el grafo dirigido y sus algoritmos. |
 | `codigo/lector/` | Contiene los métodos de lectura de archivos `.mtx` y `.txt`. |
-| `codigo/legacy/` | Contiene código anterior o auxiliar conservado como referencia histórica. |
+| `codigo/legacy/` | Contiene versiones anteriores conservadas únicamente como respaldo del proceso de desarrollo y no forma parte de la ejecución principal del sistema.|
 | `codigo/main.py` | Coordinador principal que carga datos, construye el grafo, ejecuta los algoritmos y genera resultados. |
 | `resultados/` | Contiene los rankings y gráficos generados automáticamente por el sistema. |
 
@@ -332,13 +332,13 @@ Después de ejecutar el programa, puede verificarse la creación de resultados c
 En Linux o macOS:
 
 ```bash
-ls ../../resultados
+ls ../resultados
 ```
 
 En Windows PowerShell:
 
 ```powershell
-Get-ChildItem ..\..\resultados
+Get-ChildItem ..\resultados
 ```
 
 La carpeta debe contener:
@@ -743,6 +743,8 @@ Los resultados generados permiten analizar la relevancia estructural de los art�
 | Categorías | Permiten contextualizar temáticamente los artículos relevantes y observar si los nodos destacados pertenecen a áreas comunes del conocimiento. |
 
 En conjunto, el análisis permite comparar si los artículos con mayor grado de entrada coinciden o no con los artículos mejor posicionados por PageRank. Esta comparación es relevante porque un alto número de enlaces entrantes no siempre implica mayor importancia global: PageRank también considera la importancia de los nodos que entregan esos enlaces.
+
+La comparación entre PageRank y grado de entrada muestra que ambas métricas se relacionan parcialmente, pero no son equivalentes. Mientras el grado de entrada cuenta cuántos enlaces recibe un artículo, PageRank pondera también la relevancia de los nodos que entregan esos enlaces. Por ello, un artículo puede alcanzar una posición destacada aunque no tenga el mayor número absoluto de enlaces entrantes.
 
 ---
 
