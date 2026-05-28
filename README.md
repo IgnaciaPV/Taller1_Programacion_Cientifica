@@ -427,14 +427,6 @@ La relación entre `GrafoArticuloCategoria` y las clases `Articulo` y `Categoria
 
 La clase `LectorArch` aparece separada porque cumple una función auxiliar de lectura de datos. No forma parte estructural directa del grafo, sino que se encarga de procesar archivos `.mtx` y `.txt` para entregar información que luego es utilizada por `GrafoArticuloCategoria` durante la construcción de la red.
 
-
-| Clase | Responsabilidad principal |
-|---|---|
-| `Articulo` | Representa cada artículo de Wikipedia, almacenando ID, nombre, categorías asociadas, enlaces entrantes y enlaces salientes. |
-| `Categoria` | Representa una categoría del dataset y mantiene la lista de artículos asociados. |
-| `GrafoArticuloCategoria` | Administra artículos, categorías, lista de adyacencia, métricas, recorridos, caminos y PageRank. |
-| `LectorArch` | Centraliza la lectura de archivos `.mtx` y `.txt` del dataset. |
-
 ---
 
 ### Clase `Articulo`
