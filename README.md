@@ -286,8 +286,8 @@ Si la ejecución es correcta, la consola debe mostrar una validación inicial de
 ```text
 VALIDACION DE CARGA
 
-Cantidad de articulos cargados: ...
-Cantidad de categorias cargadas: ...
+Cantidad de articulos cargados: 14011
+Cantidad de categorias cargadas: 61
 Cantidad de enlaces procesados: 10000
 Cantidad de relaciones articulo-categoria: 10000
 ```
