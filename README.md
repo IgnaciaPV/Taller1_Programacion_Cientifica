@@ -28,8 +28,8 @@
     <td>Universidad Católica del Norte</td>
   </tr>
   <tr>
-    <td><b>Fecha</b></td>
-    <td>16/05/2026</td>
+    <td><b>Fecha de Entrega</b></td>
+    <td>27/05/2026</td>
   </tr>
 </table>
 
@@ -118,9 +118,9 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 │
 ├── datos/
 │   ├── README.txt
-│   ├── wiki-topcats.mtx
-│   ├── wiki-topcats_Categories.mtx
-│   ├── wiki-topcats_pagenames.txt
+│   ├── wiki-topcats.mtx   # descargar desde Kaggle
+│   ├── wiki-topcats_Categories.mtx   # descargar desde Kaggle
+│   ├── wiki-topcats_pagenames.txt   
 │   └── wiki-topcats_Category_names.txt
 │
 ├── documentacion/
@@ -129,15 +129,18 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 │   └── Informe_Taller1.pdf
 │
 ├── codigo/
-│   └── dominio/
-│       ├── articulos.py
-│       ├── categoria.py
-│       ├── grafoarticulocategoria.py
-│       ├── lector_datos.py
-│       ├── lector_datosmtx.py
-│       └── main.py
+│   ├── dominio/
+│   │   ├── articulos.py
+│   │   └── categoria.py
+│   ├── grafo/
+│   │   └── grafoarticulocategoria.py
+│   ├── lector/
+│   │   └── lector_datos.py
+│   ├── legacy/
+│   │    └── lector_datosmtx.py
+│   └── main.py
 │
-└── resultados/
+└── resultados/   # se crea automáticamente al ejecutar
     ├── ranking_pagerank.txt
     ├── top_grado_entrada.png
     ├── top_grado_salida.png
@@ -154,8 +157,12 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 |---|---|
 | `datos/` | Contiene los archivos requeridos del dataset `wiki-topcats` o las instrucciones para descargarlos desde Kaggle. |
 | `documentacion/` | Contiene el enunciado del taller, el informe de resultados y el diagrama de clases. |
-| `codigo/dominio/` | Contiene las clases del dominio, la lectura de datos, la estructura del grafo y la ejecución principal. |
-| `codigo/dominio/main.py` | Coordina la carga de datos, construcción del grafo, ejecución de algoritmos y generación de resultados. |
+| `codigo/` | Contiene el programa principal y los módulos del proyecto. |
+| `codigo/dominio/` | Contiene las clases que representan entidades del dominio: artículos y categorías. |
+| `codigo/grafo/` | Contiene la clase que administra el grafo dirigido y sus algoritmos. |
+| `codigo/lector/` | Contiene los métodos de lectura de archivos `.mtx` y `.txt`. |
+| `codigo/legacy/` | Contiene código anterior o auxiliar conservado como referencia histórica. |
+| `codigo/main.py` | Coordinador principal que carga datos, construye el grafo, ejecuta los algoritmos y genera resultados. |
 | `resultados/` | Contiene los rankings y gráficos generados automáticamente por el sistema. |
 
 ---
@@ -222,25 +229,24 @@ python -m pip install matplotlib
 
 ### Ejecución del programa
 
-Debido a la estructura modular del proyecto, se recomienda ejecutar el programa desde la carpeta `codigo/dominio/`.
+Debido a la estructura modular del proyecto, se recomienda ejecutar el programa desde la carpeta `codigo/`.
 
 En Linux o macOS:
 
 ```bash
-cd codigo/dominio
-PYTHONPATH=.. python3 main.py
+cd codigo
+python3 main.py
 ```
 
 En Windows PowerShell:
 
 ```powershell
-cd codigo/dominio
-$env:PYTHONPATH=".."
+cd codigo
 python main.py
 ```
 
 > [!NOTE]
-> Esta forma de ejecución permite que Python encuentre correctamente el paquete `dominio` y que las rutas relativas hacia `../../datos/` y `../../resultados/` funcionen de forma adecuada.
+> Esta forma de ejecución permite que Python encuentre correctamente los paquetes internos `dominio`, `grafo` y `lector`, y que las rutas relativas hacia `../datos/` y `../resultados/` funcionen de forma adecuada.
 
 > [!NOTE]
 > Al ejecutar el programa, se construye el grafo dirigido, se calculan métricas estructurales, se aplican recorridos BFS/DFS, se estima PageRank simplificado y se generan archivos de salida en la carpeta `resultados/`.
@@ -252,8 +258,8 @@ python main.py
 En caso de ejecutar el proyecto en un entorno Linux sin interfaz gráfica, se puede usar:
 
 ```bash
-cd codigo/dominio
-MPLBACKEND=Agg PYTHONPATH=.. python3 main.py
+cd codigo
+MPLBACKEND=Agg python3 main.py
 ```
 
 Este comando permite generar los gráficos sin depender de una ventana visual.
@@ -362,6 +368,7 @@ distribucion_grados.png
 | Asociación artículo-categoría | Implementado |
 | Cálculo de grado de entrada | Implementado |
 | Cálculo de grado de salida | Implementado |
+| Selección automática del nodo inicial para BFS/DFS según mayor grado de salida | Implementado |
 | Recorrido BFS | Implementado |
 | Recorrido DFS | Implementado |
 | Verificación de camino entre artículos | Implementado |
@@ -387,7 +394,14 @@ distribucion_grados.png
 
 ## Modelo orientado a objetos
 
-El sistema se organiza mediante clases con responsabilidades diferenciadas: `Articulo` y `Categoria` representan entidades del dominio, `GrafoArticuloCategoria` concentra la estructura y operaciones del grafo, y `LectorArch` centraliza la lectura de archivos del dataset.
+El sistema se organiza mediante clases con responsabilidades diferenciadas. Esta decisión permite mantener una arquitectura modular, separar la lectura de datos de la lógica del grafo y facilitar futuras extensiones del proyecto.
+
+| Clase | Responsabilidad principal |
+|---|---|
+| `Articulo` | Representa cada artículo de Wikipedia, almacenando ID, nombre, categorías asociadas, enlaces entrantes y enlaces salientes. |
+| `Categoria` | Representa una categoría del dataset y mantiene la lista de artículos asociados. |
+| `GrafoArticuloCategoria` | Administra artículos, categorías, lista de adyacencia, métricas, recorridos, caminos y PageRank. |
+| `LectorArch` | Centraliza la lectura de archivos `.mtx` y `.txt` del dataset. |
 
 ---
 
@@ -642,8 +656,6 @@ El archivo `main.py` coordina la ejecución completa del sistema mediante las si
 
 Al ejecutar `main.py`, el sistema genera resultados por consola y archivos en la carpeta `resultados/`.
 
----
-
 ### Salida por consola
 
 El programa muestra:
@@ -777,24 +789,16 @@ En la implementación, cada artículo almacena sus categorías asociadas y cada 
 
 ---
 
-## Mejoras futuras
-
-- Optimizar PageRank usando listas de enlaces entrantes o estructuras tipo `set`.
-- Incorporar un criterio automático de convergencia para detener las iteraciones de PageRank.
-- Procesar subconjuntos de mayor tamaño para obtener resultados más representativos.
-- Exportar tablas adicionales en formato `.csv` para facilitar análisis posterior.
-- Incorporar visualizaciones comparativas entre grado de entrada, grado de salida y PageRank.
-
----
-
 ## Entregables incluidos
 
 | Entregable solicitado | Ubicación en el repositorio |
 |---|---|
-| Código fuente | `codigo/dominio/` |
+| Código fuente | `codigo/` |
 | README pertinente | `README.md` |
+| Dataset o instrucciones de descarga | `datos/` |
 | Diagrama de clases | `documentacion/Diagrama_Clase_Taller1.pdf` |
 | Informe de resultados y conclusiones | `documentacion/Informe_Taller1.pdf` |
+| Enunciado del taller | `documentacion/Taller_1_PC_S1_2026.pdf` |
 | Resultados generados | `resultados/` |
 
 ---

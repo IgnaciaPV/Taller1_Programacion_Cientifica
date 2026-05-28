@@ -121,6 +121,8 @@ class GrafoArticuloCategoria:
         for id_articulo in self.articulos:
             rank[id_articulo] = 1 / cantidad_nodos
 
+        completado = 0
+
 
         for i in range(iteraciones):
             nuevo_rank = {}
@@ -141,5 +143,9 @@ class GrafoArticuloCategoria:
                         + factor_amortiguacion * suma
                 )
             rank = nuevo_rank
+
+            completado += int(100 / iteraciones)
+            print(f"{completado}% Completado")
+           
 
         return rank
