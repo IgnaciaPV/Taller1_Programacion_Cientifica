@@ -396,6 +396,25 @@ distribucion_grados.png
 
 El sistema se organiza mediante clases con responsabilidades diferenciadas. Esta decisión permite mantener una arquitectura modular, separar la lectura de datos de la lógica del grafo y facilitar futuras extensiones del proyecto.
 
+<p align="center">
+  <img src="documentacion/Diagrama_Clase_Taller1.png" alt="Diagrama de clases del sistema" width="850">
+</p>
+
+<p align="center">
+  <em>Figura 1. Diagrama de clases del sistema implementado.</em>
+</p>
+
+### Lectura UML del diagrama de clases
+
+El diagrama utiliza la notación UML para representar la estructura orientada a objetos del sistema. Cada rectángulo corresponde a una clase y se divide en tres secciones: nombre de la clase, atributos y métodos. En la parte superior aparece el nombre de la clase, por ejemplo `Articulo`, `Categoria`, `GrafoArticuloCategoria` y `LectorArch`. En la sección central se declaran los atributos junto con su tipo de dato, mientras que en la sección inferior se indican los métodos disponibles, sus parámetros y el tipo de dato que retornan.
+
+Los símbolos de visibilidad siguen la convención UML: el signo `-` indica atributos privados o internos de la clase, mientras que el signo `+` indica métodos públicos que pueden ser utilizados desde otras partes del programa. Por ejemplo, atributos como `id_articulo`, `nombre_articulo` o `adyacencia` aparecen con `-`, mientras que métodos como `agregar_articulo()`, `bfs()`, `dfs()` y `pagerank()` aparecen con `+`.
+
+La relación entre `GrafoArticuloCategoria` y las clases `Articulo` y `Categoria` se representa mediante agregación, indicada por el rombo blanco ubicado en el extremo de `GrafoArticuloCategoria`. En UML, la agregación indica una relación “todo-parte” débil: el grafo administra múltiples artículos y categorías, pero estos objetos pueden entenderse como entidades independientes dentro del modelo. La multiplicidad `1` junto a `GrafoArticuloCategoria` indica que existe una instancia principal del grafo, mientras que `0..*` junto a `Articulo` y `Categoria` indica que el grafo puede contener cero, uno o muchos artículos y categorías.
+
+La clase `LectorArch` aparece separada porque cumple una función auxiliar de lectura de datos. No forma parte estructural directa del grafo, sino que se encarga de procesar archivos `.mtx` y `.txt` para entregar información que luego es utilizada por `GrafoArticuloCategoria` durante la construcción de la red.
+
+
 | Clase | Responsabilidad principal |
 |---|---|
 | `Articulo` | Representa cada artículo de Wikipedia, almacenando ID, nombre, categorías asociadas, enlaces entrantes y enlaces salientes. |
@@ -767,7 +786,9 @@ En la implementación, cada artículo almacena sus categorías asociadas y cada 
 
 ## Cumplimiento de la rúbrica
 
-| Criterio de evaluación | Puntaje | Evidencia en el proyecto |
+La siguiente tabla resume cómo los componentes desarrollados en el proyecto se relacionan con los criterios establecidos en la rúbrica del taller. La columna de ponderación indica el puntaje asignado por la rúbrica a cada dimensión evaluada.
+
+| Criterio de evaluación | Ponderación según rúbrica | Evidencia en el proyecto |
 |---|---:|---|
 | Carga y manejo de datos | 10 pts | Se leen archivos `.mtx` y `.txt` del dataset `wiki-topcats`, considerando enlaces, nombres de artículos, nombres de categorías y relaciones artículo-categoría. Además, se trabaja con subconjuntos funcionales de 10.000 enlaces y 10.000 relaciones. |
 | Modelado orientado a objetos | 20 pts | Se implementan las clases `Articulo`, `Categoria`, `GrafoArticuloCategoria` y `LectorArch`, separando entidades del dominio, lectura de datos y operaciones del grafo. |
