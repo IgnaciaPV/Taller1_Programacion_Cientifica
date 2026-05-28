@@ -105,6 +105,19 @@ Debido al tamaño del dataset original, se trabaja con un subconjunto de 10.000 
 
 El subconjunto no pretende representar la totalidad de Wikipedia, sino permitir un análisis estructural acotado y verificable dentro de los objetivos del laboratorio.
 
+--- 
+
+## Parámetros de ejecución
+
+| Parámetro | Valor utilizado |
+|---|---:|
+| Enlaces entre artículos procesados | 10.000 |
+| Relaciones artículo-categoría procesadas | 10.000 |
+| Iteraciones de PageRank | 20 |
+| Factor de amortiguación | 0.85 |
+| Nodo inicial BFS/DFS | Artículo con mayor grado de salida |
+| Librerías de grafos | No utilizadas |
+
 ---
 
 ## Estructura del proyecto
@@ -117,7 +130,7 @@ El proyecto se organiza separando los archivos de datos, la documentación acad�
 ├── .gitignore
 │
 ├── datos/
-│   ├── README.txt
+│   ├── README.md
 │   ├── wiki-topcats.mtx   # descargar desde Kaggle
 │   ├── wiki-topcats_Categories.mtx   # descargar desde Kaggle
 │   ├── wiki-topcats_pagenames.txt   
@@ -609,7 +622,7 @@ El método `existe_camino(origen, destino)` permite determinar si, partiendo des
 
 ### PageRank simplificado
 
-El algoritmo PageRank estima la relevancia de cada artículo considerando los enlaces entrantes y la importancia de los artículos que lo referencian.
+El algoritmo PageRank estima la relevancia estructural de cada artículo considerando sus enlaces entrantes y la importancia de los artículos que lo referencian.
 
 La implementación considera:
 
@@ -618,12 +631,7 @@ La implementación considera:
 - Factor de amortiguación.
 - Distribución del valor de un artículo entre sus enlaces salientes.
 
-Parámetros por defecto:
-
-```text
-iteraciones = 20
-factor_amortiguacion = 0.85
-```
+Para esta implementación se utilizaron 20 iteraciones y un factor de amortiguación de 0.85, de acuerdo con los parámetros de ejecución definidos previamente.
 
 ---
 
@@ -761,8 +769,6 @@ Los resultados generados permiten analizar la relevancia estructural de los art�
 | PageRank | Permite estimar la importancia de un artículo considerando no solo cuántos enlaces recibe, sino también la relevancia de los artículos que lo enlazan. |
 | Categorías | Permiten contextualizar temáticamente los artículos relevantes y observar si los nodos destacados pertenecen a áreas comunes del conocimiento. |
 
-En conjunto, el análisis permite comparar si los artículos con mayor grado de entrada coinciden o no con los artículos mejor posicionados por PageRank. Esta comparación es relevante porque un alto número de enlaces entrantes no siempre implica mayor importancia global: PageRank también considera la importancia de los nodos que entregan esos enlaces.
-
 La comparación entre PageRank y grado de entrada muestra que ambas métricas se relacionan parcialmente, pero no son equivalentes. Mientras el grado de entrada cuenta cuántos enlaces recibe un artículo, PageRank pondera también la relevancia de los nodos que entregan esos enlaces. Por ello, un artículo puede alcanzar una posición destacada aunque no tenga el mayor número absoluto de enlaces entrantes.
 
 ---
@@ -819,7 +825,7 @@ La siguiente tabla resume cómo los componentes desarrollados en el proyecto se 
 | Código fuente | `codigo/` |
 | README pertinente | `README.md` |
 | Dataset o instrucciones de descarga | `datos/` |
-| Diagrama de clases | `documentacion/Diagrama_Clase_Taller1.pdf` |
+| Diagrama de clases | `documentacion/Diagrama_Clase_Taller1.png` |
 | Informe de resultados y conclusiones | `documentacion/Informe_Taller1.pdf` |
 | Enunciado del taller | `documentacion/Taller_1_PC_S1_2026.pdf` |
 | Resultados generados | `resultados/` |
